@@ -17,7 +17,7 @@ function ProductDetail() {
         // URL của API của bạn
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/v1/product/${productId}`);
+                const response = await axios.get(`https://ecommerce-q3sc.onrender.com/api/v1/product/${productId}`);
                 setProducts(response.data.product)
             } catch (err) {
                 setError(err);
