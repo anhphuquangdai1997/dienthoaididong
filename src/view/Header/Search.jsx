@@ -2,7 +2,7 @@ import React from 'react'
 
 const Search = ({ search, setSearch, category, setCategory, categories }) => {
     return (
-        <form className="max-w-lg mx-auto p-2 mt-16">
+        <form className="max-w-lg mx-auto p-2 mt-16 sm:mt-20">
             <div className="flex">
                 <select
                     onChange={(e) => setCategory(e.target.value)}
