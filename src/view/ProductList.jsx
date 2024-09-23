@@ -18,7 +18,7 @@ function ProductList() {
         // URL của API của bạn
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/v1/products');
+                const response = await axios.get('https://ecommerce-q3sc.onrender.com/api/v1/products');
                 setProducts(response.data.products);
                 const allCategories = response.data.products.map(product => product.category);
                 const uniqueCategories = allCategories.filter((category, index) => allCategories.indexOf(category) === index);

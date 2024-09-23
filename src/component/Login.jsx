@@ -10,7 +10,7 @@ const Login = () => {
 
     const handleLogin = async (e) => {  
         e.preventDefault();  
-        const response = await fetch('http://localhost:5000/api/v1/login', {  
+        const response = await fetch('https://ecommerce-q3sc.onrender.com/api/v1/login', {  
             method: 'POST',  
             headers: {  
                 'Content-Type': 'application/json',  

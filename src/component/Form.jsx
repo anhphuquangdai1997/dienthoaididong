@@ -69,7 +69,7 @@ const Form = () => {
             ward: selectedWard
         }
         try {
-            const response= await axios.post('http://localhost:5000/api/save-address',data)
+            const response= await axios.post('https://ecommerce-q3sc.onrender.com/api/save-address',data)
             alert(response.data.message)
         } catch (error) {
             alert('error',error)
