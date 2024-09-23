@@ -7,7 +7,14 @@ export default {
     flowbite.content(),
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        'xxs': '360px',
+      },
+      fontSize: {
+        '10px': '10px',
+      },
+    },
   },
   plugins: [
     flowbite.plugin(),

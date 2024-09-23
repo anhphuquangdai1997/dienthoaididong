@@ -24,7 +24,7 @@ const Navbar = () => {
 
     return (
         <nav className="bg-white border-gray-200 shadow-md dark:bg-gray-900 dark:border-gray-700 fixed top-0 left-0 right-0 z-50">
-            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 xxs:p-2 ">
                 <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
                     <img src="https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo.jpg" className="h-8" alt="Logo" />
                     <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MyStore</span>
