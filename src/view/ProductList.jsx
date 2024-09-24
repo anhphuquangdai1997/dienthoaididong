@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Loading from '../component/Loading';
 import Search from './Header/Search';
 import PriceSearch from './PriceSearch';
+import Footer from './Footer';
 
 function ProductList() {
     const [products, setProducts] = useState([]);
@@ -74,6 +75,7 @@ function ProductList() {
                 (<p className="text-center text-lg py-10">No matching products found.</p>)
             }
         </div>
+        <Footer/>
         </div>
     );
 };

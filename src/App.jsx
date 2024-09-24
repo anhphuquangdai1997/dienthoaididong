@@ -9,6 +9,9 @@ import { CartProvider } from './contex/CartContext'
 import Dashboard from './component/Admin/Dashboard';
 import { AuthProvider } from './contex/AuthContext';
 import Footer from './view/Footer';
+import Contact from './view/Contact';
+import About from './view/About';
+import Products from './view/Products';
 
 
 function App() {
@@ -21,13 +24,14 @@ function App() {
             <Navbar />
             <Routes>
               <Route path="/" element={<ProductList />} />
-              <Route path="/product" element={<ProductList />} />
+              <Route path="/product" element={<Products />} />
               <Route path="/product/:productId" element={<ProductDetail />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
-            <Footer/>
           </Router>
         </CartProvider>
       </AuthProvider>
