@@ -5,6 +5,8 @@ import Loading from './Loading';
 import { CartContext } from '../contex/CartContext';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Rating } from 'flowbite-react';
+import ProductModal from './ProductModal';
 
 function ProductDetail() {
     const { productId } = useParams();
@@ -12,6 +14,7 @@ function ProductDetail() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { addToCart } = useContext(CartContext)
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         // URL của API của bạn
@@ -33,7 +36,10 @@ function ProductDetail() {
 
     const handleToCart = () => {
         addToCart(products)
-    }
+    }    
+      const handleCloseModal = () => {
+        setIsModalOpen(false);
+      };
 
     return (
         <div className="container mx-auto p-4 mt-16">
@@ -64,6 +70,11 @@ function ProductDetail() {
                     <p className="text-gray-600">{products.description}</p>
 
                     <div className="text-2xl font-semibold text-green-500">$ {products.price}</div>
+                    <Rating>
+                        {[...Array(5)].map((_, index) => (
+                            <Rating.Star key={index} filled={index < Math.round(products.ratings)} />
+                        ))}
+                    </Rating>
                     <div className="space-y-2">
                         <label className="block text-gray-700">{products.Stock >= 1 ? (
                             <input
@@ -76,11 +87,14 @@ function ProductDetail() {
                             (<p className="text-red-500">Liên Hệ</p>)}
                         </label>
                     </div>
+                    <div className='flex gap-2'>
                     <button
                         onClick={handleToCart}
                         className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-500 transition duration-300">
                         add to cart
-                    </button>
+                    </button>                   
+                    <ProductModal isOpen={isModalOpen} onClose={handleCloseModal} {...products}/>
+                    </div>
                 </div>
             </div>
 
@@ -90,6 +104,29 @@ function ProductDetail() {
                 <p className="mt-4 text-gray-600">
                     {products.description}
                 </p>
+            </div>
+            {/* Đánh giá của khách hàng */}
+            <div className="mt-10">
+                <h2 className="text-2xl font-bold text-gray-800">Đánh giá của khách hàng</h2>
+                <div className="mt-4 text-gray-600">
+                    {products.reviews.length > 0 ? (
+                        products.reviews.map((rev, index) => (
+                            <div key={index} className="bg-white p-4 rounded-lg shadow-md mb-4">
+                                <div className='flex justify-between'>
+                                    <p className="text-lg font-semibold">{rev.name}</p>
+                                    <Rating>
+                                        {[...Array(5)].map((_, index) => (
+                                            <Rating.Star key={index} filled={index < Math.round(rev.rating)} />
+                                        ))}
+                                    </Rating>
+                                </div>
+                                <span className="text-gray-700">{rev.comment}</span>
+                            </div>
+                        ))
+                    ) : (
+                        <p className="text-gray-700">Chưa có đánh giá nào</p>
+                    )}
+                </div>
             </div>
         </div>
     );
