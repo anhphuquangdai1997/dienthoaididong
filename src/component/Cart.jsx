@@ -4,11 +4,15 @@ import { CartContext } from '../contex/CartContext';
 
 const Cart = () => {
 
-  const { cart,removeFromCart } = useContext(CartContext)
+  const { cart,removeFromCart,} = useContext(CartContext)
 
   if (cart.length === 0) {
     return <p className="text-center text-gray-500 py-20">Giỏ hàng của bạn đang trống.</p>;
   }
+  // const totalPrice = cart.reduce((acc, item) => {  
+  //   return acc + item.price * item.quanlity;
+  // }, 0);
+  // console.log(typeof totalPrice)  
 
   return (
     <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
@@ -22,7 +26,6 @@ const Cart = () => {
               <div>
                 <h2 className="text-lg font-semibold">{item.name}</h2>
                 <p className="text-gray-600">Giá: ${item.price}</p>
-                
                 <span className='flex'>
                 <p className="text-gray-600">Số lượng:{item.quanlity}</p>
                   <input
@@ -35,7 +38,7 @@ const Cart = () => {
               </div>
             </div>
             <button
-              onClick={() => removeFromCart(item._id)}
+              onClick={()=>removeFromCart(item._id)}
               className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300"
             >
               Xóa

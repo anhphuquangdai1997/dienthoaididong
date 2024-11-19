@@ -11,20 +11,19 @@ export const CartProvider = ({children})=>{
       localStorage.setItem('cart', JSON.stringify(cart))
 
     }, [cart])
-    
 
     const addToCart=(product)=>{
         setCart((prevCart)=>[...prevCart,product])
     }
-    const removeFromCart = (productId) => {  
-        setCart((prevCart) => prevCart.filter(product => product.id !== productId))  
-    }
     const getCartItemCount=()=>{
         return cart.length
-    }  
+    }
+    const removeFromCart = (id) => {  
+      setCart((prevCart)=>prevCart.filter(item=>item._id!==id))
+  };   
 
   return (
-    <CartContext.Provider value={{cart,addToCart,removeFromCart,getCartItemCount}}>
+    <CartContext.Provider value={{cart,addToCart,getCartItemCount,removeFromCart}}>
         {children}
     </CartContext.Provider>
   )

@@ -7,7 +7,7 @@ const Search = ({ search, setSearch, category, setCategory, categories }) => {
                 <select
                     onChange={(e) => setCategory(e.target.value)}
                     value={category}
-                    className="flex-shrink-0 z-10 py-2.5 px-3 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                    className="flex-shrink-0 z-10 py-1 px-1 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
                 >
                     <option value="">All</option>
                     {categories.map((cat) => (
