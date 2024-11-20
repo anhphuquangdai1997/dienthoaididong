@@ -11,6 +11,7 @@ import Pagination from '../component/Pagination';
 import ServiceList from './ServiceList';
 import Slide from './Slide';
 import RepairOptions from './RepairOptions';
+import Adtiment from './Adtiment';
 
 function ProductList() {
     const [products, setProducts] = useState([]);
@@ -69,10 +70,10 @@ function ProductList() {
         <div>
             <Search search={search} setSearch={setSearch} category={category} setCategory={setCategory} categories={categories} />
             <PriceSearch sortOrder={sortOrder} setSortOrder={setSortOrder} setIsFeatured={setIsFeatured} isFeatured={isFeatured} sellWell={sellWell}  setSellWell={setSellWell}/>
-            <div className='flex'>
+            <div className='flex justify-center gap-4'>
                 <ServiceList className="col-span-1"/>
                 <Slide className="col-span-2">2</Slide>
-                <ServiceList className="col-span-1"/>
+                <Adtiment className="col-span-1"/>
             </div>
             <RepairOptions/>
             <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 p-1 px-4 sm:px-8">

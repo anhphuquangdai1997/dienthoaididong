@@ -22,7 +22,7 @@ const Slide = () => {
   };  
 
   return (  
-    <div className="relative w-full max-w-2xl mx-auto">  
+    <div className="relative w-full max-w-3xl">  
       <img src={images[currentIndex]} alt="Slider" className="w-full rounded-lg" />  
       <button onClick={prevSlide} className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md">  
         &#10094;  

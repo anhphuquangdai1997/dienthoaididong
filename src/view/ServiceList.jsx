@@ -13,7 +13,7 @@ const items = [
 
 const ServiceList = () => {  
   return (  
-    <div className="max-w-sm mx-auto bg-white shadow-md rounded-lg overflow-hidden hidden md:block">  
+    <div className="max-w-sm bg-white shadow-md rounded-lg overflow-hidden hidden md:block">  
       <ul className="divide-y divide-gray-200">  
         {items.map((item, index) => (  
           <li key={index} className="flex items-center justify-between p-2 hover:bg-gray-100 cursor-pointer">  
