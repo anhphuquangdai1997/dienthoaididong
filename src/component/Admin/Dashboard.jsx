@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import ProductAdmin from './ProductAdmin';
+import OrderAdmin from './OrderAdmin';
 
 const Dashboard = () => {
   const [selectedMenu, setSelectedMenu] = useState(null);
@@ -134,7 +135,7 @@ const Dashboard = () => {
             <div className="p-4 sm:ml-64">
                 <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
                     {/* Hiển thị nội dung tương ứng với menu đã chọn */}
-                    {selectedMenu === 'order' && <p>order content</p>}
+                    {selectedMenu === 'order' && <OrderAdmin/>}
                     {selectedMenu === 'product' && <ProductAdmin/>}
                     {selectedMenu === 'user' && <p>User content</p>}
                     {selectedMenu === 'rating' && <p>rating content</p>}

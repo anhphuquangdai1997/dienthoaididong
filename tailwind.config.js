@@ -9,6 +9,8 @@ export default {
   theme: {
     extend: {
       screens: {
+        customscreen:'769px',
+        'customscreen-max':{max:'1220px'},
         'xxs': '360px',
       },
       fontSize: {

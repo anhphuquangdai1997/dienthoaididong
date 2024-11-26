@@ -7,6 +7,9 @@ import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Rating } from 'flowbite-react';
 import ProductModal from './ProductModal';
+import CarouselDetail from './CarouselDetail';
+import { Toast } from "flowbite-react";
+import { HiCheck } from 'react-icons/hi';
 
 function ProductDetail() {
     const { productId } = useParams();
@@ -15,6 +18,8 @@ function ProductDetail() {
     const [error, setError] = useState(null);
     const { addToCart } = useContext(CartContext)
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [showToast, setShowToast] = useState(false);
+
 
     useEffect(() => {
         // URL của API của bạn
@@ -36,13 +41,26 @@ function ProductDetail() {
 
     const handleToCart = () => {
         addToCart(products)
-    }    
-      const handleCloseModal = () => {
+        setShowToast(true)
+        setTimeout(() => setShowToast(false), 3000)
+    }
+    const handleCloseModal = () => {
         setIsModalOpen(false);
-      };
+    };
 
     return (
         <div className="container mx-auto p-4 mt-16">
+            {showToast && (
+                <div className="fixed top-5 right-5 z-50">
+                    <Toast>
+                        <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-green-100 text-green-500 dark:bg-green-800 dark:text-green-200">
+                            <HiCheck className="h-5 w-5" />
+                        </div>
+                        <div className="ml-3 text-sm font-normal">Đã thêm vào giỏ hàng.</div>
+                        <Toast.Toggle />
+                    </Toast>
+                </div>
+            )}
             {/* Phần hình ảnh sản phẩm */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex justify-center">
@@ -88,12 +106,12 @@ function ProductDetail() {
                         </label>
                     </div>
                     <div className='flex gap-2'>
-                    <button
-                        onClick={handleToCart}
-                        className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-500 transition duration-300">
-                        add to cart
-                    </button>                   
-                    <ProductModal isOpen={isModalOpen} onClose={handleCloseModal} {...products}/>
+                        <button
+                            onClick={handleToCart}
+                            className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-500 transition duration-300">
+                            Mua Ngay
+                        </button>
+                        <ProductModal isOpen={isModalOpen} onClose={handleCloseModal} {...products} />
                     </div>
                 </div>
             </div>
@@ -103,6 +121,13 @@ function ProductDetail() {
                 <h2 className="text-2xl font-bold text-gray-800">Chi Tiết Sản Phẩm</h2>
                 <p className="mt-4 text-gray-600">
                     {products.description}
+                </p>
+            </div>
+            {/* sản phẩm tương tự */}
+            <div className="mt-10">
+                <h2 className="text-2xl font-bold text-gray-800">Gợi ý sản phẩm</h2>
+                <p className="mt-4 text-gray-600">
+                    <CarouselDetail />
                 </p>
             </div>
             {/* Đánh giá của khách hàng */}

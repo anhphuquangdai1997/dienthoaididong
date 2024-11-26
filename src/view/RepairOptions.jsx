@@ -1,6 +1,11 @@
-import React from 'react';  
+import React from 'react';
+import { useNavigate } from 'react-router-dom';  
 
 const RepairOptions = () => {  
+  const navigate = useNavigate();
+  const handleClick= (name)=>{
+    navigate('/book',{state:{name}})
+  }
   return (  
     <div className="flex container mx-auto p-5 justify-between ">  
       <h1 className="flex items-center text-xl font-bold">  
@@ -15,10 +20,10 @@ const RepairOptions = () => {
           "Thay camera",  
           "Thay loa",  
           "Thay cáp sạc",  
-          "Lỗi nguồn",  
-          "Xem tất cả"  
+          "Lỗi nguồn"
         ].map((option, index) => (  
-          <button   
+          <button
+            onClick={()=>handleClick(option)}   
             key={index}   
             className="m-1 px-2 py-1 border rounded-lg border-gray-300 bg-gray-100 hover:bg-orange-500 transition hidden md:block"  
           >  

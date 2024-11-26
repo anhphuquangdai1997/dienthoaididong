@@ -1,4 +1,5 @@
-import React, { useState } from 'react';  
+import React, { useState } from 'react';
+import { Carousel } from "flowbite-react";  
 
 const images = [  
   'https://cdni.dienthoaivui.com.vn/690x300,webp,q100/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/images/92a36a7be921324b4552c2b81f6c0b46.png',  
