@@ -35,6 +35,7 @@ function App() {
               <Route path="/repairOptions" element={<RepairOptions />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/tabs" element={<TabsMobile />} />
               <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
             <TabsMobile/>

@@ -21,7 +21,7 @@ function ProductList() {
     const [category, setCategory] = useState("");
     const [categories, setCategories] = useState([]);
     const [sortOrder, setSortOrder] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);  
+    const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [isFeatured, setIsFeatured] = useState(false);
     const [sellWell, setSellWell] = useState(false);
@@ -50,9 +50,9 @@ function ProductList() {
     const filteredProducts = products.filter((product) => {
         const searchterm = product.name.toLowerCase().includes(search.toLowerCase());
         const categoryterm = category === "" || product.category === category;
-        const featuredTerm =isFeatured ? product.ratings>=4.5 : true;
-        const sellWellTerm = sellWell ? product.numOfReviews >=2  : true;
-        return searchterm && categoryterm && featuredTerm &&sellWellTerm;
+        const featuredTerm = isFeatured ? product.ratings >= 4.5 : true;
+        const sellWellTerm = sellWell ? product.numOfReviews >= 2 : true;
+        return searchterm && categoryterm && featuredTerm && sellWellTerm;
     })
         .sort((a, b) => {
             if (sortOrder === 'asc') {
@@ -69,38 +69,40 @@ function ProductList() {
     return (
         <div>
             <Search search={search} setSearch={setSearch} category={category} setCategory={setCategory} categories={categories} />
-            <PriceSearch sortOrder={sortOrder} setSortOrder={setSortOrder} setIsFeatured={setIsFeatured} isFeatured={isFeatured} sellWell={sellWell}  setSellWell={setSellWell}/>
+            <PriceSearch sortOrder={sortOrder} setSortOrder={setSortOrder} setIsFeatured={setIsFeatured} isFeatured={isFeatured} sellWell={sellWell} setSellWell={setSellWell} />
             <div className='flex justify-center gap-4'>
-                <ServiceList className="col-span-1"/>
+                <ServiceList className="col-span-1" />
                 <Slide className="col-span-2">2</Slide>
-                <Adtiment className="col-span-1"/>
+                <Adtiment className="col-span-1" />
             </div>
-            <RepairOptions/>
-            <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 p-1 px-4 sm:px-8">
+            <RepairOptions />
+            <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 p-1 px-4 sm:px-28">
                 {filteredProducts.length > 0 ? (
                     filteredProducts.map((product) => (
                         <div key={product._id} className="border rounded-lg shadow-lg p-4 flex flex-col items-center">
                             <Link to={`/product/${product._id}`}>
-                                <img className="w-32 h-32 object-cover mb-4 sm:w-64 sm:h-64 " alt={product.images[0].url} src={product.images[0].url} />
-                                <h2 className="text-sm font-semibold mb-2 max-w-36 sm:text-xl sm:max-w-60">{product.name}</h2>
+                                <img className="w-28 h-28 object-cover mb-4 sm:w-40 sm:h-40 " alt={product.images[0].url} src={product.images[0].url} />
+                                <h2 className="text-sm font-semibold mb-2 max-w-36 sm:text-lg sm:max-w-60">{product.name}</h2>
                                 <p className="text-lg text-gray-700 mb-2">Price: ${product.price}</p>
                                 <Rating>
-                                    {[...Array(5)].map((_,index)=>(
-                                        <Rating.Star key={index} filled={index<Math.round(product.ratings)}/>
+                                    {[...Array(5)].map((_, index) => (
+                                        <Rating.Star key={index} filled={index < Math.round(product.ratings)} />
                                     ))}
                                     <span className='text-gray-700 text-xs'>{product.numOfReviews} đánh giá</span>
-                                </Rating>                               
+                                </Rating>
                                 <p className={product.Stock < 1 ? "text-red-500" : "text-green-500"}>
                                     {product.Stock < 1 ? "Liên hệ" : "Còn Hàng"}
                                 </p>
-                                <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300'>view more</button>
+                                <div className='flex gap-2'>
+                                    <button className='bg-black hover:bg-red-700 text-white py-2 px-4 rounded transition duration-300'>view more</button>
+                                </div>
                             </Link>
                         </div>
                     ))) :
                     (<p className="text-center text-lg py-10">No matching products found.</p>)
                 }
             </div>
-            <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages}/>
+            <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
             <Footer />
         </div>
     );

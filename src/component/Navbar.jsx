@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link,NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { CartContext } from '../contex/CartContext';
 import { useAuth } from '../contex/AuthContext';
 import { FaCalendarAlt } from "react-icons/fa";
@@ -7,6 +7,7 @@ import { BsBell } from "react-icons/bs";
 import { MdOutlineContactSupport } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
+import { IoCloseSharp } from "react-icons/io5";
 
 const Navbar = () => {
     const { getCartItemCount } = useContext(CartContext);
@@ -41,33 +42,33 @@ const Navbar = () => {
                     aria-expanded={isMobileMenuOpen}
                 >
                     <span className="sr-only">Open main menu</span>
-                    <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                    {isMobileMenuOpen ? (<IoCloseSharp />) : (<svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                         <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15" />
-                    </svg>
+                    </svg>)}
                 </button>
                 <div className={`w-full md:block md:w-auto ${isMobileMenuOpen ? "block" : "hidden"}`} id="navbar-dropdown">
-                    <ul className="flex flex-col items-center font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                        <li>
-                            <NavLink to="/" className={({isActive})=> isActive ? "text-green-500 block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" :"block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"}><IoHomeOutline /></NavLink>
+                    <ul className="flex flex-col items-start font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                        <li className='p-2.5 text-xs'>
+                            <NavLink to="/" className={({ isActive }) => isActive ? "text-green-500 block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"}><span className='flex gap-1 items-center'><IoHomeOutline />Trang Chủ</span></NavLink>
                         </li>
-                        <li>
-                            <NavLink to="/book" className={({isActive})=> isActive ? "text-green-500 block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" :"block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"}><span className='flex gap-1 items-center'><FaCalendarAlt /></span></NavLink>
+                        <li className='p-2.5 text-xs'>
+                            <NavLink to="/book" className={({ isActive }) => isActive ? "text-green-500 block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"}><span className='flex gap-1 items-center'><FaCalendarAlt />Đặt Lịch</span></NavLink>
                         </li>
-                        <li>
-                            <NavLink to="/about" className={({isActive})=> isActive ? "text-green-500 block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" :"block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"}><BsBell /></NavLink>
+                        <li className='p-2.5 text-xs'>
+                            <NavLink to="/about" className={({ isActive }) => isActive ? "text-green-500 block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"}><span className='flex gap-1 items-center'><BsBell />Thông Báo</span></NavLink>
                         </li>
-                        <li>
-                            <NavLink to="/contact" className={({isActive})=> isActive ? "text-green-500 block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" :"block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"}><MdOutlineContactSupport /></NavLink>
+                        <li className='p-2.5 text-xs'>
+                            <NavLink to="/contact" className={({ isActive }) => isActive ? "text-green-500 block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"}><span className='flex gap-1 items-center'><MdOutlineContactSupport />Trợ Giúp</span></NavLink>
                         </li>
-                        <li>
+                        <li className='p-2.5 text-xs'>
                             <Link to="/cart" className="flex items-center justify-between py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
                                 </svg>
-                                <span className="text-red-500 font-bold">{getCartItemCount()}</span>
+                                <span className="text-red-500 font-bold">{getCartItemCount()}</span>Giỏ hàng
                             </Link>
                         </li>
-                        <li className="relative inline-block">
+                        <li className="relative inline-block p-1.5'">
                             {isAuthenticated ? (
                                 <>
                                     <button
@@ -90,7 +91,7 @@ const Navbar = () => {
                                     )}
                                 </>
                             ) : (
-                                <Link to="/login"><button className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white"><FaRegUser /></button></Link>
+                                <Link to="/login"><button className="block text-xs py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white"><span className='flex gap-1 items-center'><FaRegUser />Đăng nhập</span></button></Link>
                             )}
                         </li>
                     </ul>
