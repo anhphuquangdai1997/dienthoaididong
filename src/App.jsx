@@ -14,6 +14,7 @@ import About from './view/About';
 import Book from './view/Book';
 import RepairOptions from './view/RepairOptions';
 import Register from './component/Register';
+import TabsMobile from './view/TabsMobile';
 
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
+            <TabsMobile/>
           </Router>
         </CartProvider>
       </AuthProvider>
