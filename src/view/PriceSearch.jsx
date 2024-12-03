@@ -12,7 +12,7 @@ const PriceSearch = ({sortOrder, setSortOrder,setIsFeatured,isFeatured,setSellWe
         setSellWell(!sellWell)
     }
     return (
-        <div className='flex'>
+        <div className='flex max-w-screen-2xl m-auto'>
             <p className='justify-center px-2 text-[rgba(102,112,133,1)]'>Sắp xếp theo</p>
             <button
                 onClick={handleFeaturedClick}

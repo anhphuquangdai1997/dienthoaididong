@@ -10,10 +10,12 @@ import ProductModal from './ProductModal';
 import CarouselDetail from './CarouselDetail';
 import { Toast } from "flowbite-react";
 import { HiCheck } from 'react-icons/hi';
+import BackHeader from './BackHeader';
 
 function ProductDetail() {
     const { productId } = useParams();
     const [products, setProducts] = useState([]);
+    const [suggestedProducts, setSuggestedProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { addToCart } = useContext(CartContext)
@@ -27,6 +29,9 @@ function ProductDetail() {
             try {
                 const response = await axios.get(`https://ecommerce-q3sc.onrender.com/api/v1/product/${productId}`);
                 setProducts(response.data.product)
+                const category = response.data.product.category;
+                const suggestedResponse = await axios.get(`https://ecommerce-q3sc.onrender.com/api/v1/products?category=${category}`);
+                setSuggestedProducts(suggestedResponse.data.products);
             } catch (err) {
                 setError(err);
             } finally {
@@ -47,9 +52,14 @@ function ProductDetail() {
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
+    // const filterProduct =products.filter((produc)=>{
+    //     const suggest =produc.categoriry=category;
+    //     return suggest
+    // })
 
     return (
         <div className="container mx-auto p-4 mt-16">
+            <BackHeader />
             {showToast && (
                 <div className="fixed top-5 right-5 z-50">
                     <Toast>
@@ -63,6 +73,7 @@ function ProductDetail() {
             )}
             {/* Phần hình ảnh sản phẩm */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
                 <div className="flex justify-center">
                     <Carousel
                         showThumbs={false}
@@ -126,9 +137,9 @@ function ProductDetail() {
             {/* sản phẩm tương tự */}
             <div className="mt-10">
                 <h2 className="text-2xl font-bold text-gray-800">Gợi ý sản phẩm</h2>
-                <p className="mt-4 text-gray-600">
-                    <CarouselDetail />
-                </p>
+                <div className='flex'>
+                <CarouselDetail suggestedProducts={suggestedProducts}/>
+                </div>
             </div>
             {/* Đánh giá của khách hàng */}
             <div className="mt-10">

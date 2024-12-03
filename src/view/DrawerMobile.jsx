@@ -27,11 +27,12 @@ const items = [
 
 const DrawerMobile = ({ isOpen, onClose }) => {
     return (
-        <Drawer open={isOpen} onClose={onClose} position="left" className="h-[86%] w-full mt-12 ">
+        <Drawer open={isOpen} onClose={onClose} position="left" className="h-full w-[90%]  ">
+            <Drawer.Header title="Danh Mục" />
             <Drawer.Items>
                     <ul className="divide-y divide-gray-200 ">
                         {items.map((item, index) => (
-                            <li key={index} className="flex items-center justify-between p-2 py-6 hover:bg-gray-100 cursor-pointer">
+                            <li key={index} className="flex items-center justify-between p-2 py-2 hover:bg-gray-100 cursor-pointer">
                                 <div className="flex items-center">
                                     <img src={item.icon} alt={item.text} className="w-12 h-16 mr-3" />
                                     <span className="text-gray-700 font-bold text-xl">{item.text}</span>

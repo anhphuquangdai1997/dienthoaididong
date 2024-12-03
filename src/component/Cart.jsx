@@ -1,25 +1,30 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CartContext } from '../contex/CartContext';
-import { IoMdArrowRoundBack } from "react-icons/io";
+
+import { Toast } from "flowbite-react";
+import BackHeader from './BackHeader';
 
 const Cart = () => {
 
+  const [showToast, setShowToast] = useState(false);
   const { cart,removeFromCart} = useContext(CartContext)
-  const navigation =useNavigate()
-  const handleClick =()=>{
-    navigation('/')
-  }
+
+
   if (cart.length === 0) {
     return <p className="text-center text-gray-500 py-20">Giỏ hàng của bạn đang trống.</p>;
   }
 
+  const handleRemove=(itemId)=>{
+    removeFromCart(itemId)
+    setShowToast(true)
+    setTimeout(()=>setShowToast(false),3000)
+  }
+
   return (
     <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
-      <div className='relative w-full flex items-center justify-center border-b py-2'>
-        <span onClick={handleClick} className='absolute left-0 top-1/2 cursor-pointer'><IoMdArrowRoundBack/></span>
-        <h2 className='my-0 py-1 text-base font-semibold'>Trang Chủ</h2>
-      </div>
+      
+      <BackHeader/>
       <h1 className="text-2xl font-bold text-gray-800 mb-6">Giỏ hàng</h1>
       <div className="space-y-4">
         {cart.map(item => (
@@ -42,7 +47,7 @@ const Cart = () => {
               </div>
             </div>
             <button
-              onClick={()=>removeFromCart(item._id)}
+              onClick={()=>handleRemove(item._id)}
               className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition duration-300"
             >
               Xóa
@@ -65,6 +70,14 @@ const Cart = () => {
           </button>
         </Link>
       </div>
+       {/* Hiển thị Toast */}
+       {showToast && (
+        <Toast className="fixed top-4 right-4 z-50">
+          <div className="flex items-center space-x-4">
+            <span className="text-green-600">Sản phẩm đã được xóa thành công</span>
+          </div>
+        </Toast>
+      )}
     </div>
   );
 };

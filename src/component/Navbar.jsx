@@ -4,14 +4,18 @@ import { CartContext } from '../contex/CartContext';
 import { useAuth } from '../contex/AuthContext';
 import { FaCalendarAlt } from "react-icons/fa";
 import { BsBell } from "react-icons/bs";
-import { MdOutlineContactSupport } from "react-icons/md";
 import { IoHomeOutline } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
+import { BsCart2 } from "react-icons/bs";
+import { MdDarkMode } from "react-icons/md";
+import { AiOutlineSun } from "react-icons/ai";
+import { DarkModeContext } from '../contex/DarkModeContext';
 
 const Navbar = () => {
     const { getCartItemCount } = useContext(CartContext);
     const { isAuthenticated, logout, userAvatar } = useAuth();
+    const {isDarkMode,toggleDarkMode}=useContext(DarkModeContext)
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -29,11 +33,11 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-white border-gray-200 shadow-md dark:bg-gray-900 dark:border-gray-700 fixed top-0 left-0 right-0 z-50">
+        <nav className={`${isDarkMode ? 'bg-black text-white' :'bg-white text-gray-900'} border-gray-200 shadow-md dark:bg-gray-900 dark:border-gray-700 fixed top-0 left-0 right-0 z-50`}>
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 xxs:p-2 ">
                 <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src="https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo.jpg" className="h-8" alt="Logo" />
-                    <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">MyStore</span>
+                    <img src={`${isDarkMode? 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ4AAAC6CAMAAABoQ1NAAAAAhFBMVEUAAAD////m5ub4+PicnJz19fXOzs5kZGSpqamPj4/7+/vR0dHX19eYmJhNTU1aWlppaWlfX1/v7+/AwMA+Pj5GRkaSkpKioqJ5eXnq6uo2Njbg4OCFhYVtbW2np6fIyMgZGRm3t7cYGBgmJiaxsbEwMDAODg6AgIBKSkoqKipUVFQyMjKJwgLZAAAEL0lEQVR4nO3d63aiMBQFYIJY0WJRsdV6KVrtdd7//cZq7YBBcSKnx637+9nVtSZnTwiQC/U8IiIiIiIiIiIiIiIiIiIiIiJnL/GLdhPORT+4NcZ0tJtxHpq+WWtoN+QMzEKzxTi8B2MYx9b72DCOH02T80e7PbqSfBot7fbous2nYSLtBqnaTcMMtFukabCbhulrN0nR0ErjUbtJikZWGuZBu02KxlYade0mKZrYnSPQbpOiOjtHRtvuHFPtNimyO0eq3SRFHfsm+6rdJkWpFceddpM0WWnE2i3SZF0r13yP9bynnTTa2g3SFeXT6Gq3R1kvG0bvqkfRLy0+b2RlHje40PQvDn+o3ZKzUFtF0fLb1zZojOJOszm0F6Lv+/1R7gezTjtMoigNB9P7X2vdr+rOx7XtRVFPm/urfH1LcneaWjS4tDtvN6mZHY/Lwmujac+KfeU3v6AL6e2xqMTVyBnsTJUP7Ve5H+MLGWbjwv/vb9Fksf29RmJPeuQDuYRhJDlc4yqR4HM2GqbW1VRgqV3MqeJjqjyej91BCqZAT4Scx7zyNJC3i1lL0JVAXbgtHUQdYT6CVD9ufINcyY6l0sAcPqq9w2akiCswN1JpTLQrc9EQCqOHuQBT8vrhnMazdmFOHsoru6I0hDpHC3EQ9ay9w1VB3ZLdKy/NAeou00+RNHztslwtReL41C7Llci1cqNdlat3iTRA32M9oVfZsXZVzkReV5raVTkTeZddlP+752khkQbklM+ayMtsol2VM5EndMhZjrVAIg7cDeoiE+jv2lU5E7nPfmhX5UwkDtB5H08ojpl2Vc6i8uL+H3tHDu7CvUgcuDdaxpEjEsdcuypnIlODuN9qEJn9wf2Sh8wiC+zgIbOxA/YN/0MkDtyrRSQO3MlSXyQO2C8UyCzCwS7RSm0ZBJ3zuBOKA3XlqVVempMn7cLciO0afNOuzInYfmPM/T8y211w85DZDLWG+PEGoSePNcCZj65gHMbH2/giGQfgCcGwvKaTBFjbPaQeTH+AjSCC95Y1sFP5Qnv0t+Amg2TjgHvZlzomuQH3wfB7yTQAV11kzhRvAJ4AEzw4CrmrUq57QH7YRKx7QHYOue4B2Tk8ry+TBuBtZYOnnvIkzi7Arl0XfdH5ZC3cPYQSSwy4e/VXnqtegYIdRzem1abRwpoFs1V7dwF95MjY871BJ2BTgkUqPBoHe+w8q7qzcbgb07OqOg2GP3BsVHOkA3F1tlgVedxqF1Gh05ddLikN7/XUjwFdVBreweslmgdfkgP7UWE/3rFX8dtcNMnePRuD4khCtVbLsU8y+JOZ9Vv90Hrrq4MtyB5plvvsdz3ct22lm2YTqV3uX/Lpz79vMePg8BTfdDleD769FHPv5NEW8bRx3ArraDQC/YocEREREREREREREREREREREcn4CyYEOaf/UFMIAAAAAElFTkSuQmCC':'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo.jpg'}`} className="h-8" alt="Logo" />
+                    <span className={`self-center text-2xl font-semibold whitespace-nowrap ${isDarkMode?'text-white':'text-black'}`}>MyStore</span>
                 </Link>
                 <button
                     onClick={toggleMobileMenu}
@@ -47,24 +51,22 @@ const Navbar = () => {
                     </svg>)}
                 </button>
                 <div className={`w-full md:block md:w-auto ${isMobileMenuOpen ? "block" : "hidden"}`} id="navbar-dropdown">
-                    <ul className="flex flex-col items-start font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                    <ul className="flex flex-col items-center font-medium p-4 md:p-0 mt-4 border  rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
                         <li className='p-2.5 text-xs'>
-                            <NavLink to="/" className={({ isActive }) => isActive ? "text-green-500 block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"}><span className='flex gap-1 items-center'><IoHomeOutline />Trang Chủ</span></NavLink>
+                            <NavLink to="/" className={({ isActive }) => isActive ? "text-green-500 block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" : "block py-2 px-3  rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"}><span className='flex gap-1 items-center'><IoHomeOutline />Trang Chủ</span></NavLink>
                         </li>
                         <li className='p-2.5 text-xs'>
-                            <NavLink to="/book" className={({ isActive }) => isActive ? "text-green-500 block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"}><span className='flex gap-1 items-center'><FaCalendarAlt />Đặt Lịch</span></NavLink>
+                            <NavLink to="/book" className={({ isActive }) => isActive ? "text-green-500 block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" : "block py-2 px-3  rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"}><span className='flex gap-1 items-center'><FaCalendarAlt />Đặt Lịch</span></NavLink>
                         </li>
                         <li className='p-2.5 text-xs'>
-                            <NavLink to="/about" className={({ isActive }) => isActive ? "text-green-500 block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"}><span className='flex gap-1 items-center'><BsBell />Thông Báo</span></NavLink>
+                            <NavLink to="/about" className={({ isActive }) => isActive ? "text-green-500 block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" : "block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"}><span className='flex gap-1 items-center'><BsBell />Thông Báo</span></NavLink>
                         </li>
                         <li className='p-2.5 text-xs'>
-                            <NavLink to="/contact" className={({ isActive }) => isActive ? "text-green-500 block py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" : "block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"}><span className='flex gap-1 items-center'><MdOutlineContactSupport />Trợ Giúp</span></NavLink>
+                            <button onClick={toggleDarkMode} className="block py-2 px-3 rounded  md:border-0 md:hover:text-blue-700 md:p-0">{isDarkMode?(<span className='flex gap-1 items-center'><MdDarkMode  />Dark</span>):(<span className='flex gap-1 items-center'><AiOutlineSun />Light</span>)}</button>
                         </li>
                         <li className='p-2.5 text-xs'>
-                            <Link to="/cart" className="flex items-center justify-between py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-                                </svg>
+                            <Link to="/cart" className="flex items-center justify-between py-2 px-3 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0  md:dark:hover:text-blue-500  dark:hover:text-white md:dark:hover:bg-transparent">
+                            <BsCart2 />
                                 <span className="text-red-500 font-bold">{getCartItemCount()}</span>Giỏ hàng
                             </Link>
                         </li>

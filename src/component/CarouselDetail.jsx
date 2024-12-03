@@ -1,68 +1,10 @@
 import React, { useState } from 'react';
 
-const CarouselDetail = () => {
+const CarouselDetail = ({suggestedProducts }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const products = [
-    {
-      id: 1,
-      img :'https://cdni.dienthoaivui.com.vn/300x300,webp,q100/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/images/tai-nghe-chup-tai-a1.jpg',
-      name: 'Loa Bluetooth Havit SK823BT 2 MIC',
-      discount: '54%',
-      price: '360.000 đ',
-      originalPrice: '790.000 đ',
-      description: 'Mic thoại, Jack 3.5, Driver 50mm',
-    },
-    {
-      id: 2,
-      img :'https://cdni.dienthoaivui.com.vn/300x300,webp,q100/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/images/tai-nghe-chup-tai-a1.jpg',
-      name: 'Loa Bluetooth Havit SK823BT 2 MIC',
-      discount: '47%',
-      price: '690.000 đ',
-      originalPrice: '1.290.000 đ',
-      description: 'Chơi nhạc 4h, Đàm thoại 3.5h',
-    },
-    {
-      id: 3,
-      img :'https://cdni.dienthoaivui.com.vn/300x300,webp,q100/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/images/tai-nghe-chup-tai-a1.jpg',
-      name: 'Loa Bluetooth Havit SK823BT 2 MIC',
-      discount: '64%',
-      price: '199.000 đ',
-      originalPrice: '550.000 đ',
-      description: 'Bluetooth 5.3, Driver 13mm',
-    },
-    {
-      id: 4,
-      img :'https://cdni.dienthoaivui.com.vn/300x300,webp,q100/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/images/tai-nghe-chup-tai-a1.jpg',
-      name: 'Loa Bluetooth Havit SK823BT 2 MIC',
-      discount: '64%',
-      price: '199.000 đ',
-      originalPrice: '550.000 đ',
-      description: 'Bluetooth 5.3, Driver 13mm',
-    },
-    {
-      id: 5,
-      img :'https://cdni.dienthoaivui.com.vn/300x300,webp,q100/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/images/tai-nghe-chup-tai-a1.jpg',
-      name: 'Loa Bluetooth Havit SK823BT 2 MIC',
-      discount: '64%',
-      price: '199.000 đ',
-      originalPrice: '550.000 đ',
-      description: 'Bluetooth 5.3, Driver 13mm',
-    },
-    {
-      id: 6,
-      img :'https://cdni.dienthoaivui.com.vn/300x300,webp,q100/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/images/tai-nghe-chup-tai-a1.jpg',
-      name: 'Loa Bluetooth Havit SK823BT 2 MIC',
-      discount: '64%',
-      price: '199.000 đ',
-      originalPrice: '550.000 đ',
-      description: 'Bluetooth 5.3, Driver 13mm',
-    },
-
-  ];
-
   const itemsPerSlide = 4; // Số sản phẩm hiển thị mỗi lần  
-  const totalSlides = Math.ceil(products.length / itemsPerSlide);
+  const totalSlides = Math.ceil(suggestedProducts.length / itemsPerSlide);
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
@@ -72,6 +14,7 @@ const CarouselDetail = () => {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + totalSlides) % totalSlides);
   };
 
+
   return (
     <div className="relative w-full max-w-3xl mx-auto">
       <div className="flex overflow-hidden">
@@ -79,19 +22,17 @@ const CarouselDetail = () => {
           className="flex transition-transform duration-500"
           style={{ transform: `translateX(-${currentIndex * (100 / totalSlides)}%)` }}
         >
-          {products.map((product, index) => (
+          {suggestedProducts.map((product) => (
             <div
-              key={product.id}
+              key={product._id}
               className="flex-shrink-0 w-1/4 p-2" // Mỗi sản phẩm chiếm 50% chiều rộng  
             >
               <div className="bg-white rounded-lg shadow-md p-4">
-                <h3 className="font-bold text-lg">{product.name}</h3>
+                <h3 className="font-bold text-sm">{product.name}</h3>
+                <p className="text-red-600"> ${product.price}</p>
                 <div className='w-full h-fit p-[5px] flex justify-center items-center overflow-hidden relative'>
-                  <img src={product.img} alt="" />
+                  <img src={product.images[0].url} alt="" />
                 </div>
-                <p className="text-red-600">Giảm {product.discount}</p>
-                <p className="text-lg">{product.price} <span className="line-through text-gray-500">{product.originalPrice}</span></p>
-                <p className="text-gray-600">{product.description}</p>
               </div>
             </div>
           ))}
@@ -110,7 +51,7 @@ const CarouselDetail = () => {
       >
         &gt;
       </button>
-    </div>
+    </div> 
   );
 };
 

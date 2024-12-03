@@ -7,7 +7,7 @@ const RepairOptions = () => {
     navigate('/book',{state:{name}})
   }
   return (  
-    <div className="flex container mx-auto p-5 justify-between ">  
+    <div className="flex container mx-auto p-5 justify-between">  
       <h1 className="flex items-center text-xl font-bold">  
         <span className="">Sản Phẩm</span>  
       </h1>  

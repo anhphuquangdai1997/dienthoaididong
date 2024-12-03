@@ -2,24 +2,18 @@ import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { FaCalendarAlt } from 'react-icons/fa';
-import { IoMdArrowRoundBack } from 'react-icons/io';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import BackHeader from '../component/BackHeader';
 
 const Book = () => {
     const [startDate, setStartDate] = useState(null);
-    const navigation =useNavigate()
     const location =useLocation();
     const name =location.state?.name ||'đặt lịch hẹn bảo hành và sửa chữa';
     console.log(name)
-    const handleClick =()=>{
-      navigation('/')
-    }
+    
     return (
         <div className="container mx-auto py-14 max-w-3xl">
-            <div className='relative w-full flex items-center justify-center border-b py-2'>
-                <span onClick={handleClick} className='absolute left-0 top-1/2 cursor-pointer'><IoMdArrowRoundBack /></span>
-                <h2 className='my-0 py-1 text-base font-semibold'>Trang Chủ</h2>
-            </div>
+            <BackHeader/>
             <h1 className="text-xl text-center text-red-600 font-bold mb-4 uppercase">{name}</h1>
             <form className='w800:px-[40px] w800:py-[24px] p-6  bg-white rounded-md shadow-md border border-gray-300'>
                 <div className="mb-4">

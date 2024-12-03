@@ -1,17 +1,17 @@
 
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Loading from '../component/Loading';
-import Search from './Header/Search';
 import PriceSearch from './PriceSearch';
-import Footer from './Footer';
 import { Rating } from 'flowbite-react';
 import Pagination from '../component/Pagination';
 import ServiceList from './ServiceList';
 import Slide from './Slide';
 import RepairOptions from './RepairOptions';
 import Adtiment from './Adtiment';
+import Footer from './Footer'
+import { SearchContext } from '../contex/SearchContext';
 
 function ProductList() {
     const [products, setProducts] = useState([]);
@@ -26,6 +26,7 @@ function ProductList() {
     const [isFeatured, setIsFeatured] = useState(false);
     const [sellWell, setSellWell] = useState(false);
     const ITEMS_PER_PAGE = 2; // Set your desired items per page  
+    const {searchTermt}=useContext(SearchContext)
 
     useEffect(() => {
         // URL của API của bạn
@@ -49,10 +50,11 @@ function ProductList() {
 
     const filteredProducts = products.filter((product) => {
         const searchterm = product.name.toLowerCase().includes(search.toLowerCase());
+        const searchtermtt = product.name.toLowerCase().includes(searchTermt.toLowerCase());
         const categoryterm = category === "" || product.category === category;
         const featuredTerm = isFeatured ? product.ratings >= 4.5 : true;
         const sellWellTerm = sellWell ? product.numOfReviews >= 2 : true;
-        return searchterm && categoryterm && featuredTerm && sellWellTerm;
+        return searchterm && categoryterm && featuredTerm && sellWellTerm &&searchtermtt;
     })
         .sort((a, b) => {
             if (sortOrder === 'asc') {
@@ -68,7 +70,6 @@ function ProductList() {
 
     return (
         <div>
-            <Search search={search} setSearch={setSearch} category={category} setCategory={setCategory} categories={categories} />
             <PriceSearch sortOrder={sortOrder} setSortOrder={setSortOrder} setIsFeatured={setIsFeatured} isFeatured={isFeatured} sellWell={sellWell} setSellWell={setSellWell} />
             <div className='flex justify-center gap-4'>
                 <ServiceList className="col-span-1" />
@@ -76,7 +77,7 @@ function ProductList() {
                 <Adtiment className="col-span-1" />
             </div>
             <RepairOptions />
-            <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2 p-1 px-4 sm:px-28">
+            <div className="grid sm:grid-cols-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-1 px-4 sm:px-28 max-w-screen-2xl m-auto">
                 {filteredProducts.length > 0 ? (
                     filteredProducts.map((product) => (
                         <div key={product._id} className="border rounded-lg shadow-lg p-4 flex flex-col items-center">
@@ -103,7 +104,7 @@ function ProductList() {
                 }
             </div>
             <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} totalPages={totalPages} />
-            <Footer />
+            <Footer/>
         </div>
     );
 };
