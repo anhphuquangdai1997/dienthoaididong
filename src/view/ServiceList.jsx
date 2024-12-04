@@ -63,7 +63,7 @@ const items = [
     ], },
 ];
 
-const ServiceList = () => {
+const ServiceList = ({isDarkMode}) => {
     const [openModal, setOpenModal] = useState(false);
     const [textt, setTextt] = useState('');
     const [servicess, setSerVicess] = useState([]);
@@ -75,15 +75,15 @@ const ServiceList = () => {
     }
 
     return (
-        <div className="max-w-sm bg-white shadow-md rounded-lg overflow-hidden hidden md:block customscreen:block customscreen-max:hidden">
-            <ul className="divide-y divide-gray-200">
+        <div className={`${isDarkMode ?('bg-customDark text-white'):('bg-white text-gray-600')} max-w-sm shadow-md rounded-lg overflow-hidden hidden md:block customscreen:block customscreen-max:hidden`}>
+            <ul className={` ${isDarkMode?'border border-transparent border-slate-600 divide-gray-200' :'divide-y divide-gray-200'}`}>
                 {items.map((item, index) => (
-                    <li key={index} onClick={() => handleItemClick(item.text,item.services)} className="flex items-center justify-between p-2 hover:bg-gray-100 cursor-pointer">
+                    <li key={index} onClick={() => handleItemClick(item.text,item.services)} className="flex items-center justify-between p-2 cursor-pointer">
                         <div className="flex items-center">
                             <img src={item.icon} alt={item.text} className="w-6 h-6 mr-3" />
-                            <span className="text-gray-700">{item.text}</span>
+                            <span className="">{item.text}</span>
                         </div>
-                        <span className="text-gray-300 ml-2 text-xl">&gt;</span>
+                        <span className=" ml-2 text-xl">&gt;</span>
                     </li>
                 ))}
             </ul>

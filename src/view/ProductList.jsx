@@ -10,8 +10,10 @@ import ServiceList from './ServiceList';
 import Slide from './Slide';
 import RepairOptions from './RepairOptions';
 import Adtiment from './Adtiment';
-import Footer from './Footer'
+import Footer from './Footer';
+import Search from '../view/Header/Search';
 import { SearchContext } from '../contex/SearchContext';
+import { DarkModeContext } from '../contex/DarkModeContext';
 
 function ProductList() {
     const [products, setProducts] = useState([]);
@@ -27,6 +29,7 @@ function ProductList() {
     const [sellWell, setSellWell] = useState(false);
     const ITEMS_PER_PAGE = 2; // Set your desired items per page  
     const {searchTermt}=useContext(SearchContext)
+    const {isDarkMode} =useContext(DarkModeContext)
 
     useEffect(() => {
         // URL của API của bạn
@@ -69,33 +72,34 @@ function ProductList() {
     if (error) return <p>Error: {error.message}</p>;
 
     return (
-        <div>
-            <PriceSearch sortOrder={sortOrder} setSortOrder={setSortOrder} setIsFeatured={setIsFeatured} isFeatured={isFeatured} sellWell={sellWell} setSellWell={setSellWell} />
+        <div className={`${isDarkMode ?('bg-customDark text-white'):('bg-white text-customDark')}`}>
+            <Search isDarkMode={isDarkMode} search={search} setSearch={setSearch} category={category} setCategory={setCategory} categories={categories}/>
+            <PriceSearch isDarkMode={isDarkMode} sortOrder={sortOrder} setSortOrder={setSortOrder} setIsFeatured={setIsFeatured} isFeatured={isFeatured} sellWell={sellWell} setSellWell={setSellWell} />
             <div className='flex justify-center gap-4'>
-                <ServiceList className="col-span-1" />
+                <ServiceList isDarkMode={isDarkMode} className="col-span-1" />
                 <Slide className="col-span-2">2</Slide>
                 <Adtiment className="col-span-1" />
             </div>
-            <RepairOptions />
+            <RepairOptions isDarkMode={isDarkMode} />
             <div className="grid sm:grid-cols-2 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 p-1 px-4 sm:px-28 max-w-screen-2xl m-auto">
                 {filteredProducts.length > 0 ? (
                     filteredProducts.map((product) => (
-                        <div key={product._id} className="border rounded-lg shadow-lg p-4 flex flex-col items-center">
-                            <Link to={`/product/${product._id}`}>
+                        <div key={product._id} className={` ${isDarkMode?'border border-transparent border-slate-600' :'border'} rounded-lg shadow-lg p-4 flex flex-col items-center h-wull`}>
+                            <Link to={`/product/${product._id}` } className="flex flex-col items-center w-full h-full">
                                 <img className="w-28 h-28 object-cover mb-4 sm:w-40 sm:h-40 " alt={product.images[0].url} src={product.images[0].url} />
-                                <h2 className="text-sm font-semibold mb-2 max-w-36 sm:text-lg sm:max-w-60">{product.name}</h2>
-                                <p className="text-lg text-gray-700 mb-2">Price: ${product.price}</p>
+                                <h2 className="text-sm font-semibold mb-2 max-w-36  sm:max-w-60">{product.name}</h2>
+                                <p className="text-lg  mb-2">Price: ${product.price}</p>
                                 <Rating>
                                     {[...Array(5)].map((_, index) => (
                                         <Rating.Star key={index} filled={index < Math.round(product.ratings)} />
                                     ))}
-                                    <span className='text-gray-700 text-xs'>{product.numOfReviews} đánh giá</span>
+                                    <span className=' text-xs'>{product.numOfReviews} đánh giá</span>
                                 </Rating>
                                 <p className={product.Stock < 1 ? "text-red-500" : "text-green-500"}>
                                     {product.Stock < 1 ? "Liên hệ" : "Còn Hàng"}
                                 </p>
-                                <div className='flex gap-2'>
-                                    <button className='bg-black hover:bg-red-700 text-white py-2 px-4 rounded transition duration-300'>view more</button>
+                                <div className='flex gap-2 mt-auto'>
+                                    <button className={`${isDarkMode? 'bg-red-500 text-white':'bg-black text-white'} hover:bg-red-700  py-2 px-4 rounded transition duration-300`}>view more</button>
                                 </div>
                             </Link>
                         </div>

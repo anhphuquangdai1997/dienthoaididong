@@ -4,6 +4,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import DrawerMobile from './DrawerMobile';
 import Search from '../component/Search';
+import { Link } from 'react-router-dom';
 
 const TabsMobile = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -27,13 +28,13 @@ const TabsMobile = () => {
                         </a>
                     </li>
                     <li className="me-2">
-                        <a
-                            href='/book'
+                        <Link
+                            to={'/book'}
                             className="inline-flex gap-0.5 items-center justify-center py-2 px-2 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 group"
                         >
                             <FaCalendarAlt />
                             Đặt Lịch
-                        </a>
+                        </Link>
                     </li>
                     <li onClick={() => setOpenSearch(true)} className="me-2">
                         <a

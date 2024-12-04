@@ -16,6 +16,9 @@ export default {
       fontSize: {
         '10px': '10px',
       },
+      colors: {
+        customDark: '#181A20',
+      },
     },
   },
   plugins: [

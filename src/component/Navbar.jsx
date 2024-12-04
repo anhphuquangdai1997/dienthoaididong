@@ -93,7 +93,7 @@ const Navbar = () => {
                                     )}
                                 </>
                             ) : (
-                                <Link to="/login"><button className="block text-xs py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white"><span className='flex gap-1 items-center'><FaRegUser />Đăng nhập</span></button></Link>
+                                <Link to="/login"><button className="block text-xs py-2 px-3 rounded hover:bg-gray-100 dark:text-white"><span className='flex gap-1 items-center'><FaRegUser />Đăng nhập</span></button></Link>
                             )}
                         </li>
                     </ul>

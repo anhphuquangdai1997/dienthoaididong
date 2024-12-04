@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const CarouselDetail = ({suggestedProducts }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const setimeoutt=2000
 
-  const itemsPerSlide = 4; // Số sản phẩm hiển thị mỗi lần  
-  const totalSlides = Math.ceil(suggestedProducts.length / itemsPerSlide);
-
+  const totalSlides = 4
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % totalSlides);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % suggestedProducts.length);
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + totalSlides) % totalSlides);
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? suggestedProducts.length - 1 : prevIndex - 1
+    );
   };
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+        nextSlide()
+    },setimeoutt)
+    return ()=>clearInterval(intervalId)
 
+  }, [currentIndex])
+  
 
   return (
     <div className="relative w-full max-w-3xl mx-auto">
@@ -25,13 +33,13 @@ const CarouselDetail = ({suggestedProducts }) => {
           {suggestedProducts.map((product) => (
             <div
               key={product._id}
-              className="flex-shrink-0 w-1/4 p-2" // Mỗi sản phẩm chiếm 50% chiều rộng  
+              className="flex-shrink-0 sm:w-1/4 w-1/2 p-2" // Mỗi sản phẩm chiếm 50% chiều rộng  
             >
               <div className="bg-white rounded-lg shadow-md p-4">
                 <h3 className="font-bold text-sm">{product.name}</h3>
                 <p className="text-red-600"> ${product.price}</p>
-                <div className='w-full h-fit p-[5px] flex justify-center items-center overflow-hidden relative'>
-                  <img src={product.images[0].url} alt="" />
+                <div className=' h-fit p-[5px] flex justify-center items-center overflow-hidden relative'>
+                  <img src={product.images[0].url} alt="images" className='w-32 h-32' />
                 </div>
               </div>
             </div>

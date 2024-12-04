@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import oneimages from "../images/4810ab203ec6286f99c11cfd7d9f5917.webp";
+import two from "../images/aaa05119320eec8a193a5fc40ca4d69d.webp";
+import three from "../images/5db8807174f55f0ae5b898429b9dad31.webp"
 
 const images = [  
-  'https://cdni.dienthoaivui.com.vn/690x300,webp,q100/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/images/92a36a7be921324b4552c2b81f6c0b46.png',  
-  'https://cdni.dienthoaivui.com.vn/690x300,webp,q100/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/images/4810ab203ec6286f99c11cfd7d9f5917.png',  
-  'https://cdni.dienthoaivui.com.vn/690x300,webp,q100/https://dashboard.dienthoaivui.com.vn/uploads/wp-content/uploads/images/aaa05119320eec8a193a5fc40ca4d69d.png',  
+  oneimages,two,three  
 ];  
 
 const Slide = () => {  
@@ -15,11 +16,6 @@ const Slide = () => {
     );  
   };  
 
-  const prevSlide = () => {  
-    setCurrentIndex((prevIndex) =>  
-      prevIndex === 0 ? images.length - 1 : prevIndex - 1  
-    );  
-  };
   useEffect(() => {
     const intervalId = setInterval(nextSlide,3000);
     return () => clearInterval(intervalId);
@@ -28,12 +24,6 @@ const Slide = () => {
   return (  
     <div className="relative w-full max-w-3xl">  
       <img src={images[currentIndex]} alt="Slider" className="w-full rounded-lg" />  
-      <button onClick={prevSlide} className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md">  
-        &#10094;  
-      </button>  
-      <button onClick={nextSlide} className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md">  
-        &#10095;  
-      </button>  
     </div>  
   );  
 };  
