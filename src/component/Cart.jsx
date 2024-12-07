@@ -4,45 +4,61 @@ import { CartContext } from '../contex/CartContext';
 
 import { Toast } from "flowbite-react";
 import BackHeader from './BackHeader';
+import { DarkModeContext } from '../contex/DarkModeContext';
 
 const Cart = () => {
 
   const [showToast, setShowToast] = useState(false);
-  const { cart,removeFromCart} = useContext(CartContext)
-
-
+  const { cart,removeFromCart,quantities,updateQuantity } = useContext(CartContext)
+  const {isDarkMode} =useContext(DarkModeContext)
   if (cart.length === 0) {
-    return <p className="text-center text-gray-500 py-20">Giỏ hàng của bạn đang trống.</p>;
+    return <p className={`text-center py-20 ${isDarkMode?'bg-customDark text-white':'text-gray-600'}`}>Giỏ hàng của bạn đang trống.</p>;
   }
-
+  //xoá sản phẩm
   const handleRemove=(itemId)=>{
     removeFromCart(itemId)
     setShowToast(true)
     setTimeout(()=>setShowToast(false),3000)
   }
+  //nút giảm
+  const handleDes=(itemId)=>{
+    updateQuantity(itemId,-1)
+  }
+  //nút tăng
+  const handleIncre=(itemId, stock)=>{
+    if(quantities[itemId]<stock){
+      updateQuantity(itemId,1)
+    }
+  }
+  //tính tổng
+  const calculateTotal=()=>{
+    return cart.reduce((total,item)=>{
+      return total+item.price*(quantities[item._id]||1)
+    },0)
+  }
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
-      
+    <div className={`${isDarkMode?'bg-customDark text-white':'text-gray-600'}`}>
+      <div className={`${isDarkMode?'bg-customDark text-white':'text-gray-600'}  max-w-4xl mx-auto mt-10 p-6 rounded-lg shadow-lg`}>
       <BackHeader/>
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Giỏ hàng</h1>
+      <h1 className="text-2xl font-bold mb-6">Giỏ hàng</h1>
       <div className="space-y-4">
         {cart.map(item => (
-          <div key={item._id} className="flex items-center justify-between p-4 bg-gray-100 rounded-lg shadow-md">
+          <div key={item._id} className="flex items-center justify-between p-4 rounded-lg shadow-md">
             <div className="flex items-center">
               <img src={item.images[0].url} className="w-16 h-16 object-cover rounded-md mr-4" />
               <div>
                 <h2 className="text-lg font-semibold">{item.name}</h2>
-                <p className="text-gray-600">Giá: ${item.price}</p>
+                <p className="">Giá: ${item.price}</p>
                 <span className='flex gap-1'>
-                <button className="rounded-md p-1 w-8 text-center border border-gray-300 rounded-l-md hover:bg-gray-200">-</button>
+                <button onClick={()=>handleDes(item._id)} className="rounded-md p-1 w-8 text-center border border-gray-300 rounded-l-md hover:bg-gray-200">-</button>
                   <input
                   type="number"
-                  max={item.Stock}
-                  defaultValue="1"
-                  className="w-8 text-center border border-gray-300 rounded-md p-1"
+                  value={quantities[item._id] || 1}
+                  readOnly
+                  className="w-8 text-center border border-gray-300 text-gray-500 rounded-md p-1"
                 />
-                <button className="rounded-md p-1 w-8 text-center border border-gray-300 rounded-l-md hover:bg-gray-200">+</button>
+                <button onClick={()=>handleIncre(item._id,item.Stock)} className="rounded-md p-1 w-8 text-center border border-gray-300 rounded-l-md hover:bg-gray-200">+</button>
                 </span>
               </div>
             </div>
@@ -57,9 +73,9 @@ const Cart = () => {
       </div>
 
       {/* Tổng giá trị giỏ hàng */}
-      <div className="mt-6 p-4 bg-gray-200 rounded-lg shadow-md flex justify-between items-center">
+      <div className="mt-6 p-4  rounded-lg shadow-md flex justify-between items-center">
         <h2 className="text-xl font-semibold">Tổng cộng:</h2>
-        <p className="text-xl font-bold text-gray-800">$</p>
+        <p className="text-xl font-bold">{calculateTotal()}$</p>
       </div>
 
       {/* Nút thanh toán */}
@@ -78,6 +94,7 @@ const Cart = () => {
           </div>
         </Toast>
       )}
+    </div>
     </div>
   );
 };

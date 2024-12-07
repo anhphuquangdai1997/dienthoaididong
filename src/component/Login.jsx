@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contex/AuthContext';
+import { DarkModeContext } from '../contex/DarkModeContext';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+
+    const {isDarkMode} =useContext(DarkModeContext)
 
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -55,7 +58,7 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className={` ${isDarkMode?'bg-customDark text-white':'bg-gray-100 text-gray-700'} min-h-screen flex items-center justify-center `}>
             {/* Thông báo lỗi */}
             {error && (
                 <div
@@ -92,12 +95,12 @@ const Login = () => {
             )}
 
             {/* Form đăng nhập */}
-            <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
-                <h2 className="text-2xl font-bold mb-6 text-gray-700 text-center">Login</h2>
+            <div className=" p-8 shadow-lg max-w-sm w-full">
+                <h2 className="text-2xl font-bold mb-6  text-center">Login</h2>
                 <form onSubmit={handleLogin} className="space-y-6">
                     {/* Input Email */}
                     <div>
-                        <label className="block mb-1 text-gray-600" htmlFor="email">
+                        <label className="block mb-1" htmlFor="email">
                             Email
                         </label>
                         <input
@@ -113,7 +116,7 @@ const Login = () => {
 
                     {/* Input Password */}
                     <div>
-                        <label className="block mb-1 text-gray-600" htmlFor="password">
+                        <label className="block mb-1" htmlFor="password">
                             Password
                         </label>
                         <input

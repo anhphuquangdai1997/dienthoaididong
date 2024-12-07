@@ -1,14 +1,13 @@
 import React from 'react'
 
 const Search = ({ search, setSearch, category, setCategory, categories,isDarkMode }) => {
-    console.log(isDarkMode)
     return (
-        <form className="max-w-lg mx-auto p-2 mt-12 sm:mt-12 sm:block hidden">
+        <form className="max-w-lg mx-auto p-2 mt-14 sm:mt-12 sm:block hidden">
             <div className={`flex`}>
                 <select
                     onChange={(e) => setCategory(e.target.value)}
                     value={category}
-                    className={`flex-shrink-0 ${isDarkMode ?'bg-customDark text-gray-300':''} z-10 py-1 px-1 text-sm font-medium text-center bg-gray-100 border border-gray-300 rounded-s-lg focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600`}
+                    className={`flex-shrink-0 ${isDarkMode ?'bg-customDark text-gray-300':''} z-10 py-1 px-1 text-sm font-medium text-center  border rounded-s-lg focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600`}
                 >
                     <option value="">All</option>
                     {categories.map((cat) => (

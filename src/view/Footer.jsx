@@ -3,7 +3,7 @@ import Appstore from "../images/Appstore.png";
 import playstore from "../images/playstore.png"
 const Footer = () => {
   return (
-    <footer className="mt-40 p-8 bg-gray-900 text-white flex items-center xxs:hidden">
+    <footer className="mt-40 p-8 bg-gray-900 text-white flex items-center">
       <div className="w-1/5 flex flex-col items-center">
         <h4 className="font-roboto text-[1vw]">DOWNLOAD OUR APP</h4>
         <p className="text-center text-[1.2vw] font-sans">

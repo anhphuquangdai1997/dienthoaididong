@@ -9,7 +9,6 @@ const Book = () => {
     const [startDate, setStartDate] = useState(null);
     const location =useLocation();
     const name =location.state?.name ||'đặt lịch hẹn bảo hành và sửa chữa';
-    console.log(name)
     
     return (
         <div className="container mx-auto py-14 max-w-3xl">

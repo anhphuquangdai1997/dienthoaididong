@@ -17,6 +17,8 @@ import TabsMobile from './view/TabsMobile';
 import { DarkModeProvider } from './contex/DarkModeContext';
 import { SearchProvider } from './contex/SearchContext';
 import Search from './component/Search';
+import Checkout from './component/Checkout';
+import Payment from './component/Payment';
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/tabs" element={<TabsMobile />} />
                   <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                  <Route path="/payment" element={<Payment />} />
                 </Routes>
                 <TabsMobile />
               </Router>

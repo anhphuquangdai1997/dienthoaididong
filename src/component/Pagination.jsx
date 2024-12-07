@@ -1,6 +1,6 @@
 import React from 'react';  
 
-const Pagination = ({ currentPage, setCurrentPage, totalPages }) => {
+const Pagination = ({ currentPage, setCurrentPage, totalPages,isDarkMode }) => {
   const handleClickPre =()=>{
     if(currentPage > 1) {
       setCurrentPage(currentPage - 1)
