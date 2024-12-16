@@ -5,13 +5,14 @@ import Loading from './Loading';
 import { CartContext } from '../contex/CartContext';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Rating } from 'flowbite-react';
+import { Rating, Textarea } from 'flowbite-react';
 import ProductModal from './ProductModal';
 import CarouselDetail from './CarouselDetail';
 import { Toast } from "flowbite-react";
 import { HiCheck } from 'react-icons/hi';
 import BackHeader from './BackHeader';
 import { DarkModeContext } from '../contex/DarkModeContext';
+import { Modal, Button } from "flowbite-react";
 
 function ProductDetail() {
     const { productId } = useParams();
@@ -22,6 +23,9 @@ function ProductDetail() {
     const { addToCart } = useContext(CartContext)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showToast, setShowToast] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [rating, setRating] = useState(5);
+    const [comment, setComment] = useState("");
 
     const { isDarkMode } = useContext(DarkModeContext)
 
@@ -30,10 +34,10 @@ function ProductDetail() {
         // URL của API của bạn
         const fetchData = async () => {
             try {
-                const response = await axios.get(`https://ecommerce-q3sc.onrender.com/api/v1/product/${productId}`);
+                const response = await axios.get(`/api/product/${productId}`);
                 setProducts(response.data.product)
                 const category = response.data.product.category;
-                const suggestedResponse = await axios.get(`https://ecommerce-q3sc.onrender.com/api/v1/products?category=${category}`);
+                const suggestedResponse = await axios.get(`/api/products?category=${category}`);
                 setSuggestedProducts(suggestedResponse.data.products);
             } catch (err) {
                 setError(err);
@@ -59,6 +63,52 @@ function ProductDetail() {
     //     const suggest =produc.categoriry=category;
     //     return suggest
     // })
+
+    const submitReviewToggle = () => {
+        open ? setOpen(false) : setOpen(true);
+    }
+    const handleRatingClick=(value)=>{
+        setRating(value)
+    }
+    const handleCancel=()=>{
+        setOpen(false)
+
+    }
+    const reviewSubmitHandler=async()=>{
+        const token =localStorage.getItem('token')
+        if (!token) {
+            alert("Bạn chưa đăng nhập!");
+            return; // Dừng hàm nếu chưa đăng nhập
+        }
+        const reviewData={
+            rating,comment,productId
+        };
+        try {
+            const config = {  
+                withCredentials: true, // Nếu cần thiết để gửi cookie  
+              };
+            const response = await axios.put('/api/review', reviewData,config,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    }
+                }
+            )
+            console.log("thành công",response.data)
+            //cập nhật lại khi người dùng submit
+            setProducts(prevState => ({
+                ...prevState,
+                reviews: [response.data, ...prevState.reviews]  // Thêm review mới vào danh sách
+            }));
+            //đóng modal
+            setOpen(false);
+            //reset lại form
+            setComment("");
+        } catch (error) {
+            console.log(error.response)
+        }
+    }
 
     return (
         <div className={`${isDarkMode ? 'bg-customDark text-white' : 'text-gray-600'}`}>
@@ -100,14 +150,42 @@ function ProductDetail() {
                     {/* Phần thông tin sản phẩm */}
                     <div className="space-y-4">
                         <h1 className="text-4xl font-bold">{products.name}</h1>
-                        <p>{products.description}</p>
-
                         <div className="text-2xl font-semibold text-green-500">$ {products.price}</div>
                         <Rating>
                             {[...Array(5)].map((_, index) => (
                                 <Rating.Star key={index} filled={index < Math.round(products.ratings)} />
                             ))}
                         </Rating>
+                        <button onClick={submitReviewToggle} className='text-white bg-red-500  py-[0.6vmax] px-[2vmax] rounded-[10px] m-[1vmax_0] cursor-pointer transition-all duration-500 outline-none hover:bg-[rgb(197,68,45)] hover:scale-110'>Submit Review</button>
+                        <Modal show={open} size="md" onClose={() => setOpen(false)} popup>
+                            <Modal.Header>
+                                <p className='text-gray-500'>đánh giá sản phẩm</p>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <div className="text-center">
+                                    <Rating size='lg'>
+                                        {
+                                            Array.from({length:5},(_,index)=>(
+                                                <Rating.Star
+                                                 key={index}
+                                                 onClick={()=>handleRatingClick(index + 1)}
+                                                 filled={index < rating}
+                                                 />
+                                            ))
+                                        }
+                                    </Rating>
+                                    <Textarea
+                                        value={comment}
+                                        onChange={(e)=>setComment(e.target.value)}  
+                                        cols="30"
+                                        rows="5" />
+                                </div>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button onClick={handleCancel} color="gray">Cancel</Button>
+                                <Button onClick={reviewSubmitHandler} color="red">Submit</Button>
+                            </Modal.Footer>
+                        </Modal>
                         <div className="space-y-2">
                             <label className="block">{products.Stock >= 1 ? (
                                 <input
@@ -132,15 +210,15 @@ function ProductDetail() {
                 </div>
 
                 {/* Phần mô tả chi tiết */}
-                <div className="mt-10">
-                    <h2 className="text-2xl font-bold ">Chi Tiết Sản Phẩm</h2>
-                    <p className="mt-4 ">
+                <div className="mt-10 text-opacity-90 font-medium text-[1.2vmax] border border-gray-400 rounded-[15px] py-2.5 px-14">
+                    <h2 className="text-2xl font-bold text-center py-4 bg-slate-300  rounded-[5px]">Chi Tiết Sản Phẩm</h2>
+                    <p className="mt-4 text-opacity-53  text-[15px] leading-[2.5] tracking-[1.5px]">
                         {products.description}
                     </p>
                 </div>
                 {/* sản phẩm tương tự */}
                 <div className="mt-10">
-                    <h2 className="text-2xl font-bold">Gợi ý sản phẩm</h2>
+                    <h2 className="text-2xl font-bold ">Gợi ý sản phẩm</h2>
                     <div className='flex'>
                         <CarouselDetail suggestedProducts={suggestedProducts} />
                     </div>

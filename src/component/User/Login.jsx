@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../contex/AuthContext';
-import { DarkModeContext } from '../contex/DarkModeContext';
+import { useAuth } from '../../contex/AuthContext';
+import { DarkModeContext } from '../../contex/DarkModeContext';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -9,7 +9,7 @@ const Login = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const {isDarkMode} =useContext(DarkModeContext)
+    const { isDarkMode } = useContext(DarkModeContext)
 
     const navigate = useNavigate();
     const { login } = useAuth();
@@ -32,7 +32,7 @@ const Login = () => {
         }
 
         try {
-            const response = await fetch('https://ecommerce-q3sc.onrender.com/api/v1/login', {
+            const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -46,8 +46,6 @@ const Login = () => {
             }
 
             const data = await response.json();
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('avatarUrl', data.user.avatar.url);
             login(data.token, data.user.avatar.url);
             navigate('/');
         } catch (error) {
@@ -58,7 +56,7 @@ const Login = () => {
     };
 
     return (
-        <div className={` ${isDarkMode?'bg-customDark text-white':'bg-gray-100 text-gray-700'} min-h-screen flex items-center justify-center `}>
+        <div className={` ${isDarkMode ? 'bg-customDark text-white' : 'bg-gray-100 text-gray-700'} min-h-screen flex items-center justify-center `}>
             {/* Thông báo lỗi */}
             {error && (
                 <div
@@ -134,11 +132,10 @@ const Login = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`w-full py-2 px-4 text-white rounded-md transition-colors ${
-                            loading
+                        className={`w-full py-2 px-4 text-white rounded-md transition-colors ${loading
                                 ? 'bg-gray-400 cursor-not-allowed'
                                 : 'bg-blue-600 hover:bg-blue-700'
-                        }`}
+                            }`}
                     >
                         {loading ? 'Signing In...' : 'Sign In'}
                     </button>

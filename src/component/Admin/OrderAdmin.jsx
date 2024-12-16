@@ -10,7 +10,7 @@ const OrderAdmin = () => {
   useEffect(() => {  
     const fetchData = async () => {  
       try {  
-        const response = await axios.get('https://ecommerce-q3sc.onrender.com/api/v1/admin/products', {  
+        const response = await axios.get('/api/admin/products', {  
           headers: {  
             'Authorization': 'Bearer'+token,
           }  

@@ -45,6 +45,9 @@ const Checkout = () => {
             setErrors('Vui lòng nhập số điện thoại');
             return;
         }
+        if(phoneNumber.length!==11){
+            setErrors('vui lòng nhập đủ 11 số')
+        }
         if (!customerName) {
             setErrors('Vui lòng nhập tên');
             return;
@@ -163,11 +166,12 @@ const Checkout = () => {
 
                             />
                             <input
-                                type="text"
-                                placeholder="Số điện thoại (bắt buộc)"
+                                type="Number"
+                                placeholder="Số điện thoại ( viết cả số 0 )"
                                 onChange={(e) => setPhoneNumber(e.target.value)}
                                 value={phoneNumber}
                                 className="border rounded-lg p-3 w-full text-xs"
+                                maxLength={11}
 
                             />
                         </div>

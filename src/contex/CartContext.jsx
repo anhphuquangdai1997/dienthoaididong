@@ -25,11 +25,23 @@ export const CartProvider = ({ children }) => {
   }, [cart,quantities,orderData])
 
   const addToCart = (product) => {
-    setCart((prevCart) => [...prevCart, product])
-    setQuantities((prevQuantities) =>({
-      ...prevQuantities,
-      [product.id]: (prevQuantities[product.id] || 0) + 1
-    }))
+    setCart((prevCart)=>{
+      const existingProduct =prevCart.find((item)=>item._id===product._id);
+      if(existingProduct){
+        setQuantities((prevQuantities)=>({
+          ...prevQuantities,
+          [product._id]: (prevQuantities[product._id] || 0) + 1,
+        }))
+        return prevCart;
+      }
+      else {
+        setQuantities((prevQuantities)=>({
+          ...prevQuantities,
+          [product._id]:1,
+        }));
+        return [...prevCart, product]
+      }
+    })
   }
   const getCartItemCount = () => {
     return cart.length>0 ? cart.length : null

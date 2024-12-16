@@ -29,6 +29,7 @@ const Cart = () => {
     if(quantities[itemId]<stock){
       updateQuantity(itemId,1)
     }
+    
   }
   //tính tổng
   const calculateTotal=()=>{

@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { CartContext } from '../contex/CartContext';
 
 const Payment = () => {
-    const {orderData,quantities}=useContext(CartContext)
+    const { orderData, quantities } = useContext(CartContext)
     console.log(orderData)
     return (
         <div className="mx-auto min-h-screen max-w-[650px] rounded-lg mt-14 pr-8 ">
@@ -40,31 +40,32 @@ const Payment = () => {
                             <span className='ml-[10px] text-xs font-semibold'>Thanh toán tại cửa hàng</span>
                         </div>
 
-                        <div className='border-[#dadada] w-full mb-[10px] hover:border-red-500 focus:border-red-500 focus:outline-none hover:shadow-md p-[10px] relative overflow-hidden bg-[#fff] border-[1px] rounded-lg h-[60px] flex justify-start items-center cursor-pointer select-none'>
-                            <div className='w-[40px] h-[40px]'>
-                                <img src="https://vinadesign.vn/uploads/images/2023/05/vnpay-logo-vinadesign-25-12-57-55.jpg" alt="payment online" className="object-contain h-full" />
+                        <div className='border-[#dadada] w-full mb-[10px] hover:border-red-500 focus:border-red-500 focus:outline-none hover:shadow-md p-[10px] relative overflow-hidden bg-[#d0c7c7] border-[1px] rounded-lg h-[60px] flex justify-between items-center cursor-pointer select-none'>
+                            <div className='flex items-center'>
+                                <div className='w-[40px] h-[40px]'>
+                                    <img src="https://vinadesign.vn/uploads/images/2023/05/vnpay-logo-vinadesign-25-12-57-55.jpg" alt="payment online" className="object-contain h-full" />
+                                </div>
+                                <span className='ml-[10px] text-xs font-semibold'>Thanh toán bằng VNPAY</span>
                             </div>
-                            <span className='ml-[10px] text-xs font-semibold'>Thanh toán bằng VNPAY</span>
+                            <Badge color="failure">Bảo trì</Badge>
                         </div>
 
-                        <div className='border-[#dadada] w-full mb-[10px] hover:border-red-500 focus:border-red-500 focus:outline-none hover:shadow-md p-[10px] relative overflow-hidden bg-[#d0c7c7] border-[1px] rounded-lg h-[60px] flex justify-between items-center cursor-pointer select-none'>
+                        <div className='border-[#dadada] w-full mb-[10px] hover:border-red-500 focus:border-red-500 focus:outline-none hover:shadow-md p-[10px] relative overflow-hidden  border-[1px] rounded-lg h-[60px] flex justify-between items-center cursor-pointer select-none'>
                             <div className='flex items-center'>
                                 <div className='w-[40px] h-[40px]'>
                                     <img src="https://dongbu.com.vn/upload/fck/image/chinh-sach-thanh-toan-giao-nhan_s3072.png" alt="payment online" className="object-contain h-full" />
                                 </div>
                                 <span className='ml-[10px] text-xs font-semibold'>Thanh toán chuyển khoản</span>
                             </div>
-                            <Badge color="failure">Bảo trì</Badge>
                         </div>
 
-                        <div className='border-[#dadada] w-full mb-[10px] hover:border-red-500 focus:border-red-500 focus:outline-none hover:shadow-md p-[10px] relative overflow-hidden bg-[#d0c7c7] border-[1px] rounded-lg h-[60px] flex justify-between items-center cursor-pointer select-none'>
+                        <div className='border-[#dadada] w-full mb-[10px] hover:border-red-500 focus:border-red-500 focus:outline-none hover:shadow-md p-[10px] relative overflow-hidden border-[1px] rounded-lg h-[60px] flex justify-between items-center cursor-pointer select-none'>
                             <div className='flex items-center'>
                                 <div className='w-[40px] h-[40px]'>
                                     <img src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="payment online" className="object-contain h-full" />
                                 </div>
                                 <span className='ml-[10px] text-xs font-semibold'>Thanh toán bằng momo</span>
                             </div>
-                            <Badge color="failure">Bảo trì</Badge>
                         </div>
                     </div>
                 </div>
