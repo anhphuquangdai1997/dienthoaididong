@@ -43,7 +43,7 @@ const Register = () => {
 
         try {
             await axios.post(
-                "/api/register",
+                "https://ecommerce-q3sc.onrender.com/api/v1/register",
                 requestData,
                 { headers: { "Content-Type": "application/json" } }
             );

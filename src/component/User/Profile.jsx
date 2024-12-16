@@ -22,7 +22,7 @@ const Profile = () => {
       const config = {  
         withCredentials: true, // Nếu cần thiết để gửi cookie  
       };  
-      const {data} = await axios.get('/api/me', config);  
+      const {data} = await axios.get('https://ecommerce-q3sc.onrender.com/api/v1/me', config);  
       setUser(data.user);
       console.log(data.user)
       console.log(user)
