@@ -6,7 +6,7 @@ export default defineConfig({
   server: {  
     proxy: {  
       '/api': {  
-        target: 'http://localhost:5000', // URL của API  
+        target: 'https://ecommerce-q3sc.onrender.com', // URL của API  
         changeOrigin: true,  
         rewrite: (path) => path.replace(/^\/api/, '/api/v1'), // Nếu cần chỉnh sửa đường dẫn  
       },  
