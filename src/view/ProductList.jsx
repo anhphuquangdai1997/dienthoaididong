@@ -35,7 +35,7 @@ function ProductList() {
         // URL của API của bạn
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/v1/products?page=${currentPage}&limit=${ITEMS_PER_PAGE}`);
+                const response = await axios.get(`https://ecommerce-q3sc.onrender.com/api/v1/products?page=${currentPage}&limit=${ITEMS_PER_PAGE}`);
                 setProducts(response.data.products);
                 setTotalPages(Math.ceil(response.data.resultPerPage / ITEMS_PER_PAGE));
                 const allCategories = response.data.products.map(product => product.category);

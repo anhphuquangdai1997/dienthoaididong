@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
             const config = {
                 withCredentials: true,
             };
-            const { data } = await axios.get('http://localhost:5000/api/v1/me', config);
+            const { data } = await axios.get('https://ecommerce-q3sc.onrender.com/api/v1/me', config);
             setCurrentUser(data.user);
         } catch (error) {
             setError(error.response?.data?.message || 'Something went wrong');
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
             const config = {
                 withCredentials: true,
             };
-            const response = await axios.get("http://localhost:5000/api/v1/admin/users", config);
+            const response = await axios.get("https://ecommerce-q3sc.onrender.com/api/v1/admin/users", config);
             setUsers(response.data.users);
         } catch (error) {
             setError(error.message);

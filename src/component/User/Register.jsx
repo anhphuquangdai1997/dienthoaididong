@@ -54,7 +54,7 @@ const Register = () => {
 
         try {
             await axios.post(
-                "http://localhost:5000/api/v1/register",
+                "https://ecommerce-q3sc.onrender.com/api/v1/register",
                 formrequestData,
                 { headers: { 'Content-Type': 'multipart/form-data' }}
             );
