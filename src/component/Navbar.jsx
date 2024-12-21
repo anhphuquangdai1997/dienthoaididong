@@ -14,13 +14,11 @@ import { DarkModeContext } from '../contex/DarkModeContext';
 
 const Navbar = () => {
     const { getCartItemCount, cart } = useContext(CartContext);
-    const { isAuthenticated, logout, userAvatar } = useAuth();
+    const { isAuthenticated, logout, currentUser } = useAuth();
     const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext)
-
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isDropdownnote, setIsDropdownnote] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
     const toggleDropdown = () => {
         setIsDropdownOpen((prev) => !prev);
     };
@@ -80,19 +78,19 @@ const Navbar = () => {
                                             </div> */}
                                         </div>
                                         <div className="p-2">
-                                            <h3 className="font-semibold text-center text-gray-700">{cart.length>0?'':'không có thông báo'}</h3>
+                                            <h3 className="font-semibold text-center text-gray-700">{cart.length > 0 ? '' : 'không có thông báo'}</h3>
                                             {cart.map((car) => (
                                                 <div key={car._id}>
-                                                    <a href="#"  className="p-2 my-2 bg-blue-100 rounded-md flex">
-                                                    <div className="flex items-start">
-                                                        <img src={car.images[0].url} alt="Avatar" className="rounded-full mr-2" width={50} height={50} />
-                                                        <div>
-                                                            <p className="text-gray-800">{car.name}<span className='text-red-500'> đã được thêm vào giỏ hàng</span></p>
-                                                            <span className="text-gray-500 text-sm">2 phút</span>
+                                                    <a href="#" className="p-2 my-2 bg-blue-100 rounded-md flex">
+                                                        <div className="flex items-start">
+                                                            <img src={car.images[0].url} alt="Avatar" className="rounded-full mr-2" width={50} height={50} />
+                                                            <div>
+                                                                <p className="text-gray-800">{car.name}<span className='text-red-500'> đã được thêm vào giỏ hàng</span></p>
+                                                                <span className="text-gray-500 text-sm">2 phút</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <span className="text-blue-500 text-3xl">•</span>
-                                                </a>
+                                                        <span className="text-blue-500 text-3xl">•</span>
+                                                    </a>
                                                 </div>
                                             ))}
                                         </div>
@@ -116,7 +114,7 @@ const Navbar = () => {
                                         onClick={toggleDropdown}
                                         className="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                                     >
-                                        <img className="w-8 h-8 rounded-full" src={userAvatar} alt="user photo" />
+                                        <img className="w-8 h-8 rounded-full" src={currentUser?.avatar?.url} alt="user photo" />
                                     </button>
                                     {isDropdownOpen && (
                                         <div
@@ -124,7 +122,7 @@ const Navbar = () => {
                                             onMouseLeave={closeDropdown} // Đóng dropdown khi rời chuột
                                         >
                                             <div className="py-1">
-                                                <Link to="/dashboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</Link>
+                                                {currentUser.role === 'admin' && (<Link to="/dashboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</Link>)}
                                                 <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">profile</Link>
                                                 <p onClick={logout} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</p>
                                             </div>

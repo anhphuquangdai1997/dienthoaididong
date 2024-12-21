@@ -1,17 +1,51 @@
+import axios from 'axios';
 import React, { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../contex/AuthContext';
 
 const UpdateProfile = () => {
-    const [avatar, setAvatar] = useState("https://res.cloudinary.com/dwjj1ijln/image/upload/v1734075362/avatars/ulxrzvq3so2flo36oudc.jpg");
-
-    const handleFileChange=(e)=>{
-        const file =e.target.files[0];
-        if(file){
+    const {updateAvatar}=useAuth()
+    const location = useLocation();
+    const navigate = useNavigate()
+    const user = location.state;
+    const [name, setName] = useState(user.name);
+    const [email, setEmail] = useState(user.email);
+    const [loading, setLoading] = useState(false);
+    const [avatar, setAvatar] = useState(user.avatar.url || "https://res.cloudinary.com/dwjj1ijln/image/upload/v1638453684/avatars/Profile_rhgig1.png");
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
             const reader = new FileReader();
-            reader.onloadend=()=>{
+            reader.onloadend = () => {
                 setAvatar(reader.result);
             }
             reader.readAsDataURL(file)
         }
+    } 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true)
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('avatar', avatar);
+
+        try {
+            const config = {
+                withCredentials: true, // Nếu cần thiết để gửi cookie  
+                headers: {
+                    'Content-Type': 'multipart/form-data', // Ensure this header is set for file upload
+                },
+            };
+            const response = await axios.put('http://localhost:5000/api/v1/me/update', formData, config);
+            navigate('/profile'); // Redirect to profile page after update
+        } catch (error) {
+            console.error('Error updating profile:', error);
+        }
+        finally {
+            setLoading(false)
+        }
+
     }
 
     return (
@@ -21,13 +55,15 @@ const UpdateProfile = () => {
                     Update Profile
                 </h2>
 
-                <form className="flex flex-col items-center mx-auto py-[2vmax] justify-evenly h-[70%] transition-all duration-500">
+                <form onSubmit={handleSubmit} className="flex flex-col items-center mx-auto py-[2vmax] justify-evenly h-[70%] transition-all duration-500">
                     <div className="flex w-full items-center">
                         <input
                             type="text"
                             placeholder="Name"
                             required
                             name="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                             className="py-[1vmax] px-[4vmax] pr-[1vmax] w-full border border-gray-300 rounded-md font-light text-[0.9vmax] outline-none"
                         />
                     </div>
@@ -37,12 +73,14 @@ const UpdateProfile = () => {
                             placeholder="Email"
                             required
                             name="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             className="py-[1vmax] px-[4vmax] pr-[1vmax] w-full border border-gray-300 rounded-md font-light text-[0.9vmax] outline-none"
                         />
                     </div>
 
                     <div className="flex flex-col items-c`enter p-2">
-                        <img src={avatar} alt="Avatar Preview" className="w-[3vmax] rounded-full m-[1vmax]" width={50} height={50}/>
+                        <img src={avatar} alt="Avatar Preview" className="w-[3vmax] rounded-full m-[1vmax]" width={50} height={50} />
                         <input
                             type="file"
                             name="avatar"
@@ -52,12 +90,15 @@ const UpdateProfile = () => {
                         />
                     </div>
 
-                    <input
+                    <button
                         type="submit"
-                        value="Update"
                         className="bg-red-500 text-white w-full py-[0.8vmax] cursor-pointer transition-all duration-500 rounded-md shadow-md hover:bg-[#b3422e] border-none"
-                    />
+                        disabled={loading} // Disable the button while loading
+                    >
+                        {loading ? 'Updating...' : 'Update'}
+                    </button>
                 </form>
+
             </div>
         </div>
 

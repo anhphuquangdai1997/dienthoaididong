@@ -26,7 +26,7 @@ function ProductDetail() {
     const [open, setOpen] = useState(false);
     const [rating, setRating] = useState(5);
     const [comment, setComment] = useState("");
-
+    const [refresh, setRefresh] = useState(false);
     const { isDarkMode } = useContext(DarkModeContext)
 
 
@@ -34,10 +34,10 @@ function ProductDetail() {
         // URL của API của bạn
         const fetchData = async () => {
             try {
-                const response = await axios.get(`https://ecommerce-q3sc.onrender.com/api/v1/product/${productId}`);
+                const response = await axios.get(`http://localhost:5000/api/v1/product/${productId}`);
                 setProducts(response.data.product)
                 const category = response.data.product.category;
-                const suggestedResponse = await axios.get(`https://ecommerce-q3sc.onrender.com/api/v1/products?category=${category}`);
+                const suggestedResponse = await axios.get(`http://localhost:5000/api/v1/products?category=${category}`);
                 setSuggestedProducts(suggestedResponse.data.products);
             } catch (err) {
                 setError(err);
@@ -47,7 +47,7 @@ function ProductDetail() {
         };
 
         fetchData();
-    }, [productId])
+    }, [productId,refresh])
 
     if (loading) return <Loading />;
 
@@ -87,7 +87,7 @@ function ProductDetail() {
             const config = {  
                 withCredentials: true, // Nếu cần thiết để gửi cookie  
               };
-            const response = await axios.put('https://ecommerce-q3sc.onrender.com/api/v1/review', reviewData,config,
+            const response = await axios.put('http://localhost:5000/api/v1/review', reviewData,config,
                 {
                     headers: {
                         'Content-Type': 'application/json',
@@ -101,6 +101,7 @@ function ProductDetail() {
                 ...prevState,
                 reviews: [response.data, ...prevState.reviews]  // Thêm review mới vào danh sách
             }));
+            setRefresh(prev=>!prev)
             //đóng modal
             setOpen(false);
             //reset lại form
@@ -109,6 +110,7 @@ function ProductDetail() {
             console.log(error.response)
         }
     }
+
 
     return (
         <div className={`${isDarkMode ? 'bg-customDark text-white' : 'text-gray-600'}`}>

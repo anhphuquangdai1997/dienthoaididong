@@ -3,12 +3,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+    const [avatar, setAvatar] = useState("")
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: "",
         email: "",
-        password: "",
-        avatar: "",
+        password: ""
     });
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
@@ -22,30 +22,41 @@ const Register = () => {
         });
     };
 
+    const handleAvatar = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const render = new FileReader();
+            render.onload = () => {
+                setAvatar(render.result);
+            }
+            render.readAsDataURL(file)
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
         setSuccess("");
         setIsLoading(true); // Bắt đầu loading
 
-        if (!formData.name || !formData.email || !formData.password || !formData.avatar) {
+        if (!formData.name || !formData.email || !formData.password || !avatar) {
             setError("Please fill in all fields.");
             setIsLoading(false); // Ngừng loading nếu không hợp lệ
             return;
         }
 
-        const requestData = {
-            name: formData.name,
-            email: formData.email,
-            password: formData.password,
-            avatar: formData.avatar,
-        };
+        const formrequestData = new FormData()
+            formrequestData.append("name",formData.name)
+            formrequestData.append("email",formData.email)
+            formrequestData.append("password",formData.password)
+            formrequestData.append("avatar",avatar)
+        ;
 
         try {
             await axios.post(
-                "https://ecommerce-q3sc.onrender.com/api/v1/register",
-                requestData,
-                { headers: { "Content-Type": "application/json" } }
+                "http://localhost:5000/api/v1/register",
+                formrequestData,
+                { headers: { 'Content-Type': 'multipart/form-data' }}
             );
             setSuccess("Đăng ký thành công!");
             navigate("/login");
@@ -110,22 +121,26 @@ const Register = () => {
                 </div>
 
                 <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-700">Avatar URL</label>
+                    <label className="block text-sm font-medium text-gray-700">Avatar</label>
+                    {avatar && (
+                        <img
+                        src={avatar}
+                        alt="Avatar Preview"
+                        className="w-20 h-20 object-cover rounded-full mx-auto"
+                    />
+                    )}
                     <input
-                        type="text"
+                        onChange={handleAvatar}
+                        type="file"
                         name="avatar"
-                        value={formData.avatar}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300"
+                        accept="image/*"
+                        className="w-full h-[5vh] bg-white border-none cursor-pointer transition-all duration-500 py-0 px-[1vmax] text-gray-600 hover:bg-gray-200"
                     />
                 </div>
-
                 <button
                     type="submit"
-                    className={`w-full py-2 px-4 rounded-lg transition ${
-                        isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600 text-white"
-                    }`}
+                    className={`w-full py-2 px-4 rounded-lg transition ${isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600 text-white"
+                        }`}
                     disabled={isLoading} // Vô hiệu hoá khi đang loading
                 >
                     {isLoading ? (

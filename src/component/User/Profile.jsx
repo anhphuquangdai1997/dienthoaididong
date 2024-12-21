@@ -1,14 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contex/AuthContext'
-import axios from 'axios';
 
 const Profile = () => {
-  const [user, setUser] = useState(null);  
-  const [loading, setLoading] = useState(true);  
-  const [error, setError] = useState(null); 
-
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated,currentUser } = useAuth()
   const navigate = useNavigate()
   useEffect(() => {
     if (isAuthenticated === false) {
@@ -16,30 +11,7 @@ const Profile = () => {
     }
   }, [isAuthenticated, navigate])
 
-  const fetchUser = async () => {  
-    try {  
-      setLoading(true);  
-      const config = {  
-        withCredentials: true, // Nếu cần thiết để gửi cookie  
-      };  
-      const {data} = await axios.get('https://ecommerce-q3sc.onrender.com/api/v1/me', config);  
-      setUser(data.user);
-      console.log(data.user)
-      console.log(user)
-    } catch (error) {  
-      setError(error.response?.data?.message || 'Something went wrong');  
-    } finally {  
-      setLoading(false);  
-    }  
-  };  
-
-  useEffect(() => {  
-    fetchUser(); // Gọi hàm fetchUser khi component được mount  
-  }, []);  
-
-  if (loading) return <p>Loading...</p>;  
-  if (error) return <p>Error: {error}</p>;  
-
+  if (!currentUser) return <p>Loading...</p>;
 
   return (
     <div className="flex flex-col md:flex-row h-screen w-screen fixed top-0 left-0 bg-white">
@@ -49,12 +21,12 @@ const Profile = () => {
       My Profile
     </h1>
     <img
-      src={user.avatar.url}
-      alt={user.name}
+      src={currentUser.avatar.url}
+      alt={currentUser.name}
       className="w-[20vmax] rounded-full transition-transform duration-500 hover:scale-105"
     />
     <Link
-      to="/me/update"
+      to="/me/update" state={currentUser}
       className="bg-red-500 text-white text-center font-roboto text-[1vmax] py-[0.5vmax] w-[30%] my-[4vmax] transition-all duration-500 hover:bg-red-600"
     >
       Edit Profile
@@ -65,16 +37,16 @@ const Profile = () => {
   <div className="flex flex-col justify-evenly items-start p-[5vmax] box-border flex-1">
     <div>
       <h4 className="text-black font-roboto text-[1.2vmax] font-normal">Full Name</h4>
-      <p className="text-gray-400 font-cursive text-[1vmax] my-[0.2vmax]">{user.name}</p>
+      <p className="text-gray-400 font-cursive text-[1vmax] my-[0.2vmax]">{currentUser.name}</p>
     </div>
     <div>
       <h4 className="text-black font-roboto text-[1.2vmax] font-normal">Email</h4>
-      <p className="text-gray-400 font-cursive text-[1vmax] my-[0.2vmax]">{user.email}</p>
+      <p className="text-gray-400 font-cursive text-[1vmax] my-[0.2vmax]">{currentUser.email}</p>
     </div>
     <div>
       <h4 className="text-black font-roboto text-[1.2vmax] font-normal">Joined On</h4>
       <p className="text-gray-400 font-cursive text-[1vmax] my-[0.2vmax]">
-      {String(user.createdAt).substring(0, 10)}
+      {String(currentUser.createdAt).substring(0, 10)}
       </p>
     </div>
 

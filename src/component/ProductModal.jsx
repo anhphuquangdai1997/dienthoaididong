@@ -17,7 +17,7 @@ const ProductModal = ({ images, name }) => {
     const [loadingWards, setLoadingWards] = useState(false);
 
     useEffect(() => {
-        axios.get(`https://provinces.open-api.vn/api/p/`)
+        axios.get(`http://provinces.open-api.vn/api/p/`)
             .then((response) => {
                 setProvinces(response.data);
                 setLoadingProvinces(false);
@@ -30,7 +30,7 @@ const ProductModal = ({ images, name }) => {
     useEffect(() => {
         if (selectedProvince) {
             setLoadingDistricts(true);
-            axios.get(`https://provinces.open-api.vn/api/p/${selectedProvince}?depth=2`)
+            axios.get(`http://provinces.open-api.vn/api/p/${selectedProvince}?depth=2`)
                 .then((response) => {
                     setDistricts(response.data.districts);
                     setWards([]);
@@ -46,7 +46,7 @@ const ProductModal = ({ images, name }) => {
         if (selectedDistrict) {
             setLoadingWards(true);
             axios
-                .get(`https://provinces.open-api.vn/api/d/${selectedDistrict}?depth=2`)
+                .get(`http://provinces.open-api.vn/api/d/${selectedDistrict}?depth=2`)
                 .then((response) => {
                     setWards(response.data.wards);
                     setLoadingWards(false);
@@ -124,8 +124,9 @@ const ProductModal = ({ images, name }) => {
                                                 <p>{name}</p>
                                             </div>
                                             <div className="col-span-2 w-14 flex">
-                                                {images.map((imag) => (
+                                                {images.map((imag,index) => (
                                                     <img
+                                                    key={index}
                                                         src={imag.url}
                                                         alt={`Product`}
                                                     />
@@ -234,10 +235,10 @@ const ProductModal = ({ images, name }) => {
                                     <label htmlFor="">thanh toán</label>
                                     <div className='flex'>
                                         <div><input type="radio" value="" name="bordered-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                            <label for="bordered-radio-1" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Online</label>
+                                            <label htmlFor="bordered-radio-1" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Online</label>
                                         </div>
                                         <div><input type="radio" value="" name="bordered-radio" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                            <label for="bordered-radio-1" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Offlile</label>
+                                            <label htmlFor="bordered-radio-1" className="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Offlile</label>
                                         </div>
                                     </div>
                                 </div>

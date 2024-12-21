@@ -22,6 +22,9 @@ import Payment from './component/Payment';
 import NotFound from './component/NotFound';
 import Profile from './component/User/Profile';
 import UpdateProfile from './component/User/UpdateProfile';
+import { ProductProvider } from './contex/ProductContext';
+import UserAdmin from './component/Admin/UserAdmin';
+import ProtectedRoute from './component/router/ProtectedRoute';
 
 function App() {
   return (
@@ -29,31 +32,37 @@ function App() {
       <DarkModeProvider>
         <AuthProvider>
           <CartProvider>
-            <SearchProvider>
-              <Router>
-                <Navbar />
-                <Routes>
-                  <Route path="/" element={<ProductList />} />
-                  <Route path="/search" element={<Search />} />
-                  <Route path="/book" element={<Book />} />
-                  <Route path="/product/:productId" element={<ProductDetail />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/about" element={<About />} />
-                  <Route path="*" element={<NotFound />} />
-                  <Route path="/repairOptions" element={<RepairOptions />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/tabs" element={<TabsMobile />} />
-                  <Route path="/dashboard" element={<Dashboard />} />
-                  <Route path="/profile" element={<Profile />} />
-                  <Route path="/checkout" element={<Checkout />} />
-                  <Route path="/me/update" element={<UpdateProfile />} />
-                  <Route path="/payment" element={<Payment />} />
-                </Routes>
-                <TabsMobile />
-              </Router>
-            </SearchProvider>
+            <ProductProvider>
+              <SearchProvider>
+                <Router>
+                  <Navbar />
+                  <Routes>
+                    <Route path="/" element={<ProductList />} />
+                    <Route path="/search" element={<Search />} />
+                    <Route path="/book" element={<Book />} />
+                    <Route path="/product/:productId" element={<ProductDetail />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="*" element={<NotFound />} />
+                    <Route path="/repairOptions" element={<RepairOptions />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/cart" element={<Cart />} />
+                    <Route path="/tabs" element={<TabsMobile />} />
+                    {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+                    <Route path="/profile" element={<Profile />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/me/update" element={<UpdateProfile />} />
+                    <Route path="/payment" element={<Payment />} />
+                    <Route
+                      path="/dashboard"
+                      element={<ProtectedRoute isAdmin={true}><Dashboard /></ProtectedRoute>}
+                    />
+                  </Routes>
+                  <TabsMobile />
+                </Router>
+              </SearchProvider>
+            </ProductProvider>
           </CartProvider>
         </AuthProvider>
       </DarkModeProvider>
