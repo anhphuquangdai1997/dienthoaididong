@@ -17,7 +17,7 @@ const ProductModal = ({ images, name }) => {
     const [loadingWards, setLoadingWards] = useState(false);
 
     useEffect(() => {
-        axios.get(`http://provinces.open-api.vn/api/p/`)
+        axios.get(`https://provinces.open-api.vn/api/p/`)
             .then((response) => {
                 setProvinces(response.data);
                 setLoadingProvinces(false);
@@ -30,7 +30,7 @@ const ProductModal = ({ images, name }) => {
     useEffect(() => {
         if (selectedProvince) {
             setLoadingDistricts(true);
-            axios.get(`http://provinces.open-api.vn/api/p/${selectedProvince}?depth=2`)
+            axios.get(`https://provinces.open-api.vn/api/p/${selectedProvince}?depth=2`)
                 .then((response) => {
                     setDistricts(response.data.districts);
                     setWards([]);
@@ -46,7 +46,7 @@ const ProductModal = ({ images, name }) => {
         if (selectedDistrict) {
             setLoadingWards(true);
             axios
-                .get(`http://provinces.open-api.vn/api/d/${selectedDistrict}?depth=2`)
+                .get(`https://provinces.open-api.vn/api/d/${selectedDistrict}?depth=2`)
                 .then((response) => {
                     setWards(response.data.wards);
                     setLoadingWards(false);
