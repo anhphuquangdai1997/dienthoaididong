@@ -34,10 +34,10 @@ function ProductDetail() {
         // URL của API của bạn
         const fetchData = async () => {
             try {
-                const response = await axios.get(`https://ecommerce-q3sc.onrender.com/api/v1/product/${productId}`);
+                const response = await axios.get(`https://be-c0pw.onrender.com/api/v1/product/${productId}`);
                 setProducts(response.data.product)
                 const category = response.data.product.category;
-                const suggestedResponse = await axios.get(`https://ecommerce-q3sc.onrender.com/api/v1/products?category=${category}`);
+                const suggestedResponse = await axios.get(`https://be-c0pw.onrender.com/api/v1/products?category=${category}`);
                 setSuggestedProducts(suggestedResponse.data.products);
             } catch (err) {
                 setError(err);
@@ -87,7 +87,7 @@ function ProductDetail() {
             const config = {  
                 withCredentials: true, // Nếu cần thiết để gửi cookie  
               };
-            const response = await axios.put('https://ecommerce-q3sc.onrender.com/api/v1/review', reviewData,config,
+            const response = await axios.put('https://be-c0pw.onrender.com/api/v1/review', reviewData,config,
                 {
                     headers: {
                         'Content-Type': 'application/json',

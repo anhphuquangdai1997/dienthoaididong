@@ -16,7 +16,7 @@ export const ProductProvider = ({ children }) => {
             withCredentials: true, // Nếu cần thiết để gửi cookie  
         };
         try {
-            const response = await axios.get("https://ecommerce-q3sc.onrender.com/api/v1/admin/products", config);
+            const response = await axios.get("https://be-c0pw.onrender.com/api/v1/admin/products", config);
             setProducts(response.data.products);
         } catch (error) {
             setError(error.message)
@@ -31,7 +31,7 @@ export const ProductProvider = ({ children }) => {
             withCredentials: true, // Nếu cần thiết để gửi cookie  
         };
         try {
-            await axios.delete(`https://ecommerce-q3sc.onrender.com/api/v1/admin/product/${id}`, config)
+            await axios.delete(`https://be-c0pw.onrender.com/api/v1/admin/product/${id}`, config)
             setProducts((prevProducts) => prevProducts.filter((product) => product.id !== id));
             console.log('sản phẩm xoá thành công')
             setRefresh(prev => !prev);
