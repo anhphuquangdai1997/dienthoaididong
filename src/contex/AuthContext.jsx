@@ -15,7 +15,11 @@ export const AuthProvider = ({ children }) => {
     const fetchCurrentUser = async () => {
         try {
             setLoading(true);
+            const token = localStorage.getItem('token') || Cookies.get('token');
             const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`, // Thêm token vào header
+                },
                 withCredentials: true,
             };
             const { data } = await axios.get('https://be-c0pw.onrender.com/api/v1/me', config);
