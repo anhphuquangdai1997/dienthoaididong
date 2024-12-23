@@ -84,7 +84,11 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('avatar', avatar);
         setUserAvatar(avatar);
         setIsAuthenticated(true);
-        Cookies.set('token', token, { path: '/',sameSite: 'None',secure: true });
+        Cookies.set('token', token, { 
+        path: '/', 
+        sameSite: 'None',  // Cho phép cookie cross-origin
+        secure: true       // Cần HTTPS để cookie được gửi đi
+    });
     };
 
     const logout = () => {
