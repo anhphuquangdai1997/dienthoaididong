@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contex/AuthContext';
 
 const UpdateProfile = () => {
-    const {updateAvatar}=useAuth()
     const location = useLocation();
     const navigate = useNavigate()
     const user = location.state;
@@ -37,7 +36,7 @@ const UpdateProfile = () => {
                     'Content-Type': 'multipart/form-data', // Ensure this header is set for file upload
                 },
             };
-            const response = await axios.put('https://be-c0pw.onrender.com/api/v1/me/update', formData, config);
+            const response = await axios.put('http://localhost:5000/api/v1/me/update', formData, config);
             navigate('/profile'); // Redirect to profile page after update
         } catch (error) {
             console.error('Error updating profile:', error);

@@ -15,14 +15,14 @@ export const AuthProvider = ({ children }) => {
     const fetchCurrentUser = async () => {
         try {
             setLoading(true);
-            const token = localStorage.getItem('token') || Cookies.get('token');
+            const token = Cookies.get('token');
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`, // Thêm token vào header
                 },
                 withCredentials: true,
             };
-            const { data } = await axios.get('https://be-c0pw.onrender.com/api/v1/me', config);
+            const { data } = await axios.get('http://localhost:5000/api/v1/me', config);
             setCurrentUser(data.user);
         } catch (error) {
             setError(error.response?.data?.message || 'Something went wrong');
@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
             const config = {
                 withCredentials: true,
             };
-            const response = await axios.get("https://be-c0pw.onrender.com/api/v1/admin/users", config);
+            const response = await axios.get("http://localhost:5000/api/v1/admin/users", config);
             setUsers(response.data.users);
         } catch (error) {
             setError(error.message);
@@ -58,7 +58,6 @@ export const AuthProvider = ({ children }) => {
             if (avatar) {
                 setUserAvatar(avatar);
             }
-            fetchCurrentUser();
         }
         else {
             setLoading(false)
@@ -84,7 +83,11 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('avatar', avatar);
         setUserAvatar(avatar);
         setIsAuthenticated(true);
-        Cookies.set('token', token, { path: '/',sameSite: 'None',secure: true });
+        Cookies.set('token', token, { 
+            path: '/', 
+            sameSite: 'None',  // Cho phép cookie cross-origin
+            secure: true       // Cần HTTPS để cookie được gửi đi
+        });
     };
 
     const logout = () => {
