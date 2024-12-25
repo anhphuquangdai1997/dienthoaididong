@@ -58,7 +58,6 @@ export const AuthProvider = ({ children }) => {
             if (avatar) {
                 setUserAvatar(avatar);
             }
-            fetchCurrentUser();
         }
         else {
             setLoading(false)
