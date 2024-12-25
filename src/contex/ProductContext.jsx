@@ -41,7 +41,8 @@ export const ProductProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        if(isAuthenticated && currentUser.role==='admin'){
+        console.log(isAuthenticated)
+        if(isAuthenticated){
             fetchProducts()
         }
     }, [refresh]);
