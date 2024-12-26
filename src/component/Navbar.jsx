@@ -14,7 +14,7 @@ import { DarkModeContext } from '../contex/DarkModeContext';
 
 const Navbar = () => {
     const { getCartItemCount, cart } = useContext(CartContext);
-    const { isAuthenticated, logout, currentUser } = useAuth();
+    const { isAuthenticated, logout } = useAuth();
     const { isDarkMode, toggleDarkMode } = useContext(DarkModeContext)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isDropdownnote, setIsDropdownnote] = useState(false);
@@ -114,7 +114,7 @@ const Navbar = () => {
                                         onClick={toggleDropdown}
                                         className="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                                     >
-                                        <img className="w-8 h-8 rounded-full" src={currentUser?.avatar?.url} alt="user photo" />
+                                        <img className="w-8 h-8 rounded-full" src='https://img.lovepik.com/free-png/20211130/lovepik-cartoon-avatar-png-image_401205594_wh1200.png' alt="user photo" />
                                     </button>
                                     {isDropdownOpen && (
                                         <div
@@ -122,7 +122,7 @@ const Navbar = () => {
                                             onMouseLeave={closeDropdown} // Đóng dropdown khi rời chuột
                                         >
                                             <div className="py-1">
-                                                {currentUser.role === 'admin' && (<Link to="/dashboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</Link>)}
+                                                <Link to="/dashboard" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</Link>
                                                 <Link to="/profile" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">profile</Link>
                                                 <p onClick={logout} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</p>
                                             </div>

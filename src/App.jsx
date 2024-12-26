@@ -56,7 +56,7 @@ function App() {
                     <Route path="/payment" element={<Payment />} />
                     <Route
                       path="/dashboard"
-                      element={<ProtectedRoute isAdmin={true}><Dashboard /></ProtectedRoute>}
+                      element={<Dashboard/>}
                     />
                   </Routes>
                   <TabsMobile />
