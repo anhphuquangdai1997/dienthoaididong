@@ -17,7 +17,7 @@ const About = () => {
       };
 
       // Gửi yêu cầu GET tới API với headers
-      const { data } = await axios.get("http://localhost:5000/api/v1/admin/users", config);
+      const { data } = await axios.get("https://be-c0pw.onrender.com/api/v1/admin/users", config);
       setUsers(data.users);
       console.log(data.users)
     } catch (err) {
